@@ -2,9 +2,6 @@ body {
     font-family: 'Courier New', Courier, monospace;
     background-color: #333;
     color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 97vh;
   }
 
@@ -16,29 +13,52 @@ code, pre {
 font-family: 'Courier New', Courier, monospace;
 }
 
-footer {
-    background-color: #333;
-    color: #fff;
-    padding-top: 3rem;
-    text-align: center;
-    font-size: 13px;
-  }
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
 
 .sidebar {
   background-color: #333;
   color: #fff;
   font-size: 14px;
-  margin-right: 7rem;
+  width: 200px;
+  /* margin-right: 7rem; */
 }
 
 .content {
-  max-width: 30rem;
+  max-width: 40rem;
+  flex-grow: 1;
+  padding: 20px;
 }
+
+footer {
+    background-color: #333;
+    color: #fff;
+    /* padding-top: 3rem; */
+    text-align: center;
+    font-size: 13px;
+  }
 
 .scrollable {
   height: 20rem;
   /* border: 1px solid red; */
   overflow-y: scroll;
+}
+
+.link_list a {
+  display: block;
+  padding: 10px;
+  color: #fff;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  border-radius: 2px;
+}
+
+.link_list a:hover {
+  background-color: #555;
 }
 
 .sidebar a {
