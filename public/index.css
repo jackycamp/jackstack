@@ -5,7 +5,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh;
+    height: 97vh;
   }
 
   h3 {
@@ -19,8 +19,43 @@ font-family: 'Courier New', Courier, monospace;
 footer {
     background-color: #333;
     color: #fff;
-    padding-top: 5rem;
+    padding-top: 3rem;
     text-align: center;
-    font-size: small;
+    font-size: 13px;
   }
+
+.sidebar {
+  background-color: #333;
+  color: #fff;
+  font-size: 14px;
+  margin-right: 7rem;
+}
+
+.content {
+  max-width: 30rem;
+}
+
+.sidebar a {
+  display: block;
+  padding: 10px;
+  color: #fff;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  border-radius: 2px;
+}
+
+.sidebar a:hover {
+  background-color: #555;
+}
+
+/* Media query for screens smaller than 768px */
+@media (max-width: 767px) {
+  .sidebar {
+    display: none;
+  }
+  
+  .content {
+    margin-left: 0;
+  }
+}
   
