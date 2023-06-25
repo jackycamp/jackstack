@@ -8,7 +8,7 @@ body {
     height: 97vh;
   }
 
-  h3 {
+  h3, h4 {
     font-weight: lighter;
   }
   
@@ -33,6 +33,12 @@ footer {
 
 .content {
   max-width: 30rem;
+}
+
+.scrollable {
+  height: 20rem;
+  /* border: 1px solid red; */
+  overflow-y: scroll;
 }
 
 .sidebar a {
