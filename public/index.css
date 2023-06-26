@@ -43,7 +43,7 @@ footer {
   }
 
 .scrollable {
-  height: 20rem;
+  max-height: 20rem;
   /* border: 1px solid red; */
   overflow-y: scroll;
 }
@@ -74,6 +74,24 @@ footer {
   background-color: #555;
 }
 
+.bottom-nav {
+  display: none;
+}
+
+.bottom-nav a {
+  color: #fff;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  border-radius: 2px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.bottom-nav a:hover {
+  text-decoration: underline;
+}
+
+
 /* Media query for screens smaller than 768px */
 @media (max-width: 767px) {
   .sidebar {
@@ -82,6 +100,11 @@ footer {
   
   .content {
     margin-left: 0;
+  }
+
+  .bottom-nav {
+    display: block;
+    text-align: center;
   }
 }
   
