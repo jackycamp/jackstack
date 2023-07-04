@@ -18,6 +18,7 @@ font-family: 'Courier New', Courier, monospace;
   justify-content: center;
   align-items: center;
   height: 90vh;
+  /* border: 1px solid green; */
 }
 
 .sidebar {
@@ -32,6 +33,15 @@ font-family: 'Courier New', Courier, monospace;
   max-width: 40rem;
   flex-grow: 1;
   padding: 20px;
+}
+
+.article {
+  margin-top: 3rem;
+  max-width: 40rem;
+  max-height: 40rem;
+  padding: 20px;
+  overflow-y: scroll;
+  /* border: 1px solid red; */
 }
 
 footer {
