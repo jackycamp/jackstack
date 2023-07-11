@@ -96,11 +96,20 @@
           <code class="inline-code">dataclass</code> implementation.
         </p>
 
-        <!-- <p>
-          this implementation is relatively straight forward, 
-        </p> -->
-
         <script src="https://gist.github.com/jackycamp/a4291384effc0f64e4e6bd4a3c5d50d6.js"></script>
+
+        <p>
+          this implementation is relatively straight forward. in summary, the 
+          <code class="inline-code">pathmanager</code>
+          function will generate getters on the fly for the attributes defined on the class.
+          those getters are basically just invoking <code class="inline-code">os.path.join</code>
+          and injecting the root where applicable.
+        </p>
+
+        <p>BUT i decided against this approach.</p>
+        <!-- TODO: expand on methods being overwritten, maintainability, etc -->
+        <!-- philosophy of a total newb being lost in the sauce, if there's a way for a total newb to not feel lost in the sauce that i'd rather go with that implementation -->
+
 
 
         <div class="whitespace"></div>
