@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>jackstack.code</title>
     <link rel="stylesheet" href="../index.css" />
-    
   </head>
   <body>
     <!-- <script src="index.js"></script> -->
@@ -16,8 +15,9 @@
         <h3>june 2023 boston</h3>
         <p>
           systems around geo-processing tools and spatial algorithms often deal
-          with a significant number of files on disk; and if you tile or distribute parts
-          of said system the number of files grow exponentially.
+          with a significant number of files on disk; and if you tile or
+          distribute parts of said system the number of files grow
+          exponentially.
         </p>
 
         <!-- <p>
@@ -26,40 +26,52 @@
         </p> -->
 
         <p>
-          it is challenging to know which files
-          are inputs or outputs for the pieces in the system. decent documentation doesn&apos;t
-          solve this problem either as it is too separate from the code.
+          it was challenging to know which files are inputs or outputs for the
+          pieces in the system. decent documentation doesn&apos;t solve this
+          problem either as it is too separate from the code.
         </p>
 
         <p>
-          some pieces of the system consume the same inputs; the outputs of some pieces may be
-          inputs to some other pieces. as the number of processing modules in a system increases
-          and the number of inputs increases, this becomes messy, frustrating, and inefficient
-          if your team doesn&apos;t have a standard.
+          some pieces of the system consume the same inputs; the outputs of some
+          pieces may be inputs to some other pieces. as the number of processing
+          modules in a system increases and the number of inputs increases, this
+          becomes messy, frustrating, and inefficient if your team doesn&apos;t
+          have a standard.
         </p>
 
         <p>
           for some of our spatial data processing pipelines (written in python),
-          my team agreed we should establish a single entry point
-          and solid interface for all files the system might
-          consume or produce.
+          my team agreed we should establish a single entry point and solid
+          interface for all files the system might consume or produce.
         </p>
 
-        <p>we came up with a list of requirements for a <code class="inline-code">PathManager</code>:</p>
+        <p>
+          we came up with a list of requirements for a
+          <code class="inline-code">PathManager</code>:
+        </p>
 
-        <p>1. should be able to hit dot and see all of the files for that instance</p>
+        <p>
+          1. should be able to hit dot and see all of the files for that
+          instance
+        </p>
         <p>2. defining a file or path should be trivial</p>
         <p>3. needs to support nested directories</p>
-        <p>4. always takes care of <code class="inline-code">os.path.join</code> for us</p>
+        <p>
+          4. always takes care of
+          <code class="inline-code">os.path.join</code> for us
+        </p>
         <p>5. documenting a path should be easy</p>
 
-        <p>I figured we should be able to define a subclass and instance like so:</p>
+        <p>
+          I figured we should be able to define a subclass and instance like so:
+        </p>
         <script src="https://gist.github.com/jackycamp/04beed2eefb82ceba4856dd9832ed1b1.js"></script>
 
-        <p>if you are familiar with the <code class="inline-code">dataclass</code> decorator this should look familiar.</p>
-
-
-
+        <p>
+          if you are familiar with the
+          <code class="inline-code">dataclass</code> decorator this should look
+          familiar.
+        </p>
       </div>
     </div>
   </body>
