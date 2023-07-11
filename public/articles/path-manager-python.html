@@ -13,12 +13,20 @@
       <div class="article">
         <h1>Path Manager in Python</h1>
         <h3>june 2023 boston</h3>
+
         <p>
+          at one of my places of employment we had various systems around
+          geo-processing tools and spatial algorithms; often dealing with a
+          ridiculous number of files on disk. we distributed some of these
+          systems for performance reasons and saw the number of files grow
+          exponentially.
+        </p>
+        <!-- <p>
           systems around geo-processing tools and spatial algorithms often deal
           with a significant number of files on disk; and if you tile or
           distribute parts of said system the number of files grow
           exponentially.
-        </p>
+        </p> -->
 
         <!-- <p>
           this is an inherent pain especially in the consulting space where 
@@ -26,23 +34,28 @@
         </p> -->
 
         <p>
+          at the time, it was challenging to know which files were inputs or
+          outputs for the pieces in the system. decent documentation didn&apos;t
+          really help either as it was too separate from the code.
+        </p>
+
+        <!-- <p>
           it was challenging to know which files are inputs or outputs for the
           pieces in the system. decent documentation doesn&apos;t solve this
           problem either as it is too separate from the code.
+        </p> -->
+
+        <p>
+          some pieces of said system consume the same inputs; the outputs of
+          some pieces may be inputs to some other pieces. as the number of
+          processing modules and number of inputs increased, this became messy,
+          frustrating, and inefficient for our team.
         </p>
 
         <p>
-          some pieces of the system consume the same inputs; the outputs of some
-          pieces may be inputs to some other pieces. as the number of processing
-          modules in a system increases and the number of inputs increases, this
-          becomes messy, frustrating, and inefficient if your team doesn&apos;t
-          have a standard.
-        </p>
-
-        <p>
-          for some of our spatial data processing pipelines (written in python),
-          my team agreed we should establish a single entry point and solid
-          interface for all files the system might consume or produce.
+          thus, for some of our spatial data processing pipelines (written in
+          python), my team agreed we should establish a single entry point and
+          solid interface for all files the system might consume or produce.
         </p>
 
         <p>
