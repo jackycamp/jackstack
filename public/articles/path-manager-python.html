@@ -64,27 +64,34 @@
         </p>
 
         <p>
-          1. should be able to hit dot and see all of the files for that
-          instance
+          1. hit &quot;.&quot; and see all the files.
         </p>
-        <p>2. defining a file or path should be trivial</p>
-        <p>3. needs to support nested directories</p>
+        <p>2. defining a file or path should be trivial.</p>
+        <p>3. needs to support nested directories.</p>
         <p>
           4. always takes care of
-          <code class="inline-code">os.path.join</code> for us
+          <code class="inline-code">os.path.join</code> for us.
         </p>
-        <p>5. documenting a path should be easy</p>
+        <p>5. documenting a path should be easy.</p>
 
         <p>
-          I figured we should be able to define a subclass and instance like so:
+          i figured we should be able to define a subclass and instance like so:
         </p>
         <script src="https://gist.github.com/jackycamp/04beed2eefb82ceba4856dd9832ed1b1.js"></script>
 
         <p>
-          if you are familiar with the
-          <code class="inline-code">dataclass</code> decorator this should look
-          familiar.
+          behind the scenes, when you access an attribute, the base class will detect
+          whether or not the attribute is a file item, and return the value accordingly. 
         </p>
+
+        <p>
+          if the attribute is a file item, we will join the item&apos;s path with the root
+          and return a path string, otherwise, business as usual; we don&apos;t wan&apos;t to conflict
+          with any potential methods or non-file attributes defined in the base class
+          or the subclass.
+        </p>
+
+        
       </div>
     </div>
   </body>
