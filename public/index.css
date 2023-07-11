@@ -60,6 +60,7 @@ code {
 }
 
 .article {
+  /* border: 1px solid red; */
   margin-top: 3rem;
   max-width: 40rem;
   max-height: 40rem;
@@ -73,6 +74,10 @@ code {
   /* border: 1px solid red; */
   /* overflow-y: scroll; */
   /* scrollbar-width: thin; */
+}
+
+.whitespace {
+  height: 20rem;
 }
 
 .article, .scrollable {
