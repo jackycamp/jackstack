@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>jackstack.code</title>
+    <link rel="stylesheet" href="../index.css" />
+  </head>
+  <body>
+    <!-- <script src="index.js"></script> -->
+    <div class="main">
+      <div class="article">
+        <h1>Noob guide for creating an EKS cluster</h1>
+        <h3>And connecting to it from your mac!</h3>
+        <h3>july 2023 boston</h3>
+
+        1. create an EKS cluster through the AWS console
+
+        2. install kubectl with homebrew
+
+        i turn on HOMEBREW_NO_AUTO_UPDATE
+        brew install kubectl
+
+        3. assumes you have the aws cli set up on your machine
+        instructions for this?
+
+        https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+        go to the macos section
+
+        set the kubeconfig 
+        aws eks update-kubeconfig --region us-east-2 --name pyro-dashboard-dev-cluster
+
+        creates a kubernetes config file in ~/.kube/config
+        and configures it for the cluster you just created in eks
+
+        check that it shows the information for your cluster
+        kubectl cluster-info
+
+        if you see:
+        error: exec plugin: invalid apiVersion "client.authentication.k8s.io/v1alpha1"
+
+        you most likely have an old version of aws cli on your mac.
+
+        upgrade the version by following the getting-started-install sections above
+        and then running the aws eks update-kubeconfig command again
+
+        then kubectl cluster-info should work
+
+        now we need to add nodes to our cluster
+
+
+        now we need to add some pods to the cluster
+        kubectl apply -f code/pyro-dashboard-api/fsim-pod.yml
+
+        kubectl get pods
+
+
+        <div class="whitespace"></div>
+
+        
+      </div>
+
+      
+    </div>
+  </body>
+</html>
