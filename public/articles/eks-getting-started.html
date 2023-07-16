@@ -6,6 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>jackstack.code</title>
     <link rel="stylesheet" href="../index.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark-dimmed.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/bash.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/python.min.js"></script> -->
   </head>
   <body>
     <!-- <script src="index.js"></script> -->
@@ -20,7 +25,8 @@
 
         <p>2. install kubectl with homebrew</p>
         <p>i turn on HOMEBREW_NO_AUTO_UPDATE</p>
-        <pre>brew install kubectl</pre>
+  
+        <pre><code class="language-bash">brew install kubectl</code></pre>
 
         <p>3. assumes you have the aws cli set up on your machine</p>
         <p>TODO: instructions for this?</p>
@@ -28,18 +34,18 @@
           go to the macos section</p>
 
         <p>4. set the kubeconfig</p>
-        <pre>aws eks update-kubeconfig --region us-east-2 --name my-cluster</pre>
+        <pre><code class="language-bash">aws eks update-kubeconfig --region us-east-2 --name my-cluster</code></pre>
         <p>
-          creates a kubernetes config file in ~/.kube/config
+          creates a kubernetes config file in <pre><code>~/.kube/config</code></pre> 
           and configures it for the cluster you just created in eks
         </p>
 
         <p>check that it shows the information for your cluster</p>
-        <pre>kubectl cluster-info</pre>
+        <pre><code class="language-bash">kubectl cluster-info</code></pre>
 
         <p>
           if you see:
-          <pre>error: exec plugin: invalid apiVersion "client.authentication.k8s.io/v1alpha1"</pre>
+          <pre><code class="language-bash">error: exec plugin: invalid apiVersion "client.authentication.k8s.io/v1alpha1"</code></pre>
         </p>
 
         <p>you most likely have an old version of aws cli on your mac.</p>
@@ -67,5 +73,6 @@
 
       
     </div>
+    <script>hljs.highlightAll();</script>
   </body>
 </html>
