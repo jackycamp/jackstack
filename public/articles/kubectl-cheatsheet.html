@@ -6,20 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>jackstack.systems</title>
     <link rel="stylesheet" href="../index.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark-dimmed.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/bash.min.js"></script>
   </head>
   <body>
-    <div class="main">
-      <div class="article">
-        <h1>Kubectl Cheat Sheet</h1>
-        <h3>july 2023 boston</h3>
+    <div class="page">
+      <h1>Kubectl Cheat Sheet</h1>
+      <h3>collection of kubectl commands that i use frequently</h3>
+      <h3>july 2023 boston</h3>
 
+      <p>create or update resources in a Kubernetes cluster according to a configuration file.</p>
+      <pre><code class="language-bash">kubectl apply -f my-spec.yml</code></pre>
 
-        <div class="whitespace"></div>
-
-        
-      </div>
-
-      
+      <div class="whitespace"></div>
     </div>
+    <script>hljs.highlightAll();</script>
   </body>
 </html>
