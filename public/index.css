@@ -14,17 +14,15 @@ font-family: 'Courier New', Courier, monospace;
 }
 
 pre {
-  background-color: #2b2b2b;
-  padding: 10px;
+  /* background-color: #2b2b2b; */
+  /* padding: 10px; */
   border-radius: 5px;
-  overflow-x: scroll;
-  /* border: 1px solid green; */
+  /* overflow-x: scroll; */
 }
 
 code {
-  background-color: #2b2b2b;;
+  /* background-color: #2b2b2b;; */
   border-radius: 5px;
-  /* border: 1px solid red; */
 }
 
 .inline-code {
