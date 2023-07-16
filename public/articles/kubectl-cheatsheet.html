@@ -19,6 +19,23 @@
       <p>create or update resources in a Kubernetes cluster according to a configuration file.</p>
       <pre><code class="language-bash">kubectl apply -f my-spec.yml</code></pre>
 
+      <p>show stdout and stderr for a pod</p>
+      <pre><code class="language-bash">kubectl logs my-pod</code></pre>
+
+      <p>show stdout and stderr for a running job</p>
+      <pre><code class="language-bash">kubectl logs jobs/my-job</code></pre>
+
+      <p>show stdout and stderr for a particular container of job</p>
+      <pre><code class="language-bash">kubectl logs jobs/my-job -c my-container</code></pre>
+
+      <p>display information about a resource (pod/job) in a Kubernetes cluster; includes configuration details as well as current status.</p>
+      <pre><code class="language-bash">kubectl describe my-pod</code></pre>
+
+
+
+      
+
+
       <div class="whitespace"></div>
     </div>
     <script>hljs.highlightAll();</script>
