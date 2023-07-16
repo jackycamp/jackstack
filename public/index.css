@@ -161,11 +161,37 @@ footer {
   text-decoration: underline;
 }
 
+.page {
+  max-width: 650px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+p {
+  margin: 0.5rem;
+}
+
 
 /* Media query for screens smaller than 768px */
 @media (max-width: 767px) {
   .sidebar {
     display: none;
+  }
+
+  .page {
+    margin: 0 auto;
+    font-size: 0.85rem;
   }
   
   .content {
