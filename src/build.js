@@ -89,5 +89,10 @@ jsFiles.forEach((fileName) => {
     fs.copyFileSync(srcPath, dstPath);
 });
 
+
+const indexOutPath = path.resolve(distDir, 'index.html');
+const indexHtml = utils.createIndexPage();
+fs.writeFileSync(indexOutPath, indexHtml);
+
 console.log("build done");
 
