@@ -1,3 +1,6 @@
+name:eks-getting-started
+date:07/01/2023
+label:systems
 
 # This is a title
 
