@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const {marked} = require('marked')
+const utils = require('./utils');
 
 console.log("..starting build");
 
@@ -20,7 +21,8 @@ const files = fs.readdirSync(pagesDir);
 files.forEach((fileName) => {
     const filePath = path.resolve(pagesDir, fileName);
     const fileData = fs.readFileSync(filePath, 'utf8');
-    const html = marked.parse(fileData);
+    const body = marked.parse(fileData);
+    const html = utils.createPage(body);
 
     let htmlFileName = fileName.split(".md")[0];
     htmlFileName += ".html";
