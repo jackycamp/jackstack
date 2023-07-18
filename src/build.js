@@ -3,6 +3,8 @@ const path = require('path');
 const {marked} = require('marked')
 const utils = require('./utils');
 
+marked.setOptions({ mangle: false, headerIds: false });
+
 console.log("..starting build");
 
 // preparing dist/ directory
@@ -25,20 +27,45 @@ fs.mkdirSync(outStylesDir);
 const pagesDir = path.resolve(__dirname, 'pages');
 const files = fs.readdirSync(pagesDir);
 
+const systemsPages = [];
+const booksPages = [];
+const codestuffPages = [];
+
+console.log("building pages")
+
 files.forEach((fileName) => {
     const filePath = path.resolve(pagesDir, fileName);
     const fileData = fs.readFileSync(filePath, 'utf8');
-    const body = marked.parse(fileData);
+    const lines = fileData.split("\n");
+
+    // meta portion of the file
+    const metaLines = lines.slice(0,3);
+    const label = metaLines.find((m) => m.startsWith("label")).split(":")[1];
+
+    // actual content that is converted to html
+    const content = lines.slice(3).join("\n");
+    const body = marked.parse(content);
     const html = utils.createPage(body);
 
+    // create the html file
     let htmlFileName = fileName.split(".md")[0];
     htmlFileName += ".html";
     console.log("htmlFileName", htmlFileName);
-
     const outPath = path.resolve(distDir, 'pages', htmlFileName);
     fs.writeFileSync(outPath, html);
+
+    // classify the page
+    if (label === 'systems') systemsPages.push(htmlFileName);
+    if (label === 'books') booksPages.push(htmlFileName);
+    if (label === 'codestuff') codestuffPages.push(htmlFileName);
 });
 
+console.log("systemsPages: ", systemsPages);
+console.log("booksPages", booksPages);
+console.log("code stuff pages: ", codestuffPages);
+
+
+console.log("generating stylesheets");
 // just copies over stylesheets, nothing fancy
 const stylesDir = path.resolve(__dirname, 'styles');
 const styleFiles = fs.readdirSync(stylesDir);
@@ -49,3 +76,18 @@ styleFiles.forEach((fileName) => {
 
     fs.copyFileSync(srcPath, dstPath);
 });
+
+console.log("generating js");
+// copy over the js
+const jsDir = path.resolve(__dirname, 'js');
+const jsFiles = fs.readdirSync(jsDir);
+
+jsFiles.forEach((fileName) => {
+    const srcPath = path.resolve(jsDir, fileName);
+    const dstPath = path.resolve(distDir, fileName);
+
+    fs.copyFileSync(srcPath, dstPath);
+});
+
+console.log("build done");
+
