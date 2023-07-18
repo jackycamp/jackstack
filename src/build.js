@@ -89,7 +89,7 @@ jsFiles.forEach((fileName) => {
     fs.copyFileSync(srcPath, dstPath);
 });
 
-
+// generate entrypoint (dist/index.html)
 const indexOutPath = path.resolve(distDir, 'index.html');
 const indexHtml = utils.createIndexPage();
 fs.writeFileSync(indexOutPath, indexHtml);
