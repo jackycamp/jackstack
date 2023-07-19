@@ -4,17 +4,24 @@ const head = `
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>jackstack</title>
-        <link rel="stylesheet" href="index.css">
+        <link rel="stylesheet" href="../styles/index.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark-dimmed.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/bash.min.js"></script>
     </head>
 `;
 
-const createPage = (body) => {
+const createPage = (pageHtml) => {
     const html = `
     <!DOCTYPE html>
     <html lang="en">
     ${head}
     <body>
-        ${body}
+        <div class="page">
+          ${pageHtml}
+        </div>
+        <div class="whitespace"></div>
+        <script>hljs.highlightAll();</script>
     </body>
     </html>
     `;
