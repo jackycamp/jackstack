@@ -2,10 +2,20 @@ name:eks-getting-started
 date:07/01/2023
 label:systems
 
-# This is a title
+# Noob's guide for creating an EKS cluster
+### and connecting to it from your mac!
 
-this is some random text
+first, create an EKS cluster through the aws console
 
 ```bash
-this is a code block lol
+TODO: put images and stuff here
 ```
+
+now you need to install kubectl with homebrew
+
+i usually turn on HOMEBREW_NO_AUTO_UPDATE
+
+```bash
+brew install kubectl
+```
+
