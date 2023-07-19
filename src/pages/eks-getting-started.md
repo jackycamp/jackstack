@@ -29,7 +29,7 @@ aws eks update-kubeconfig --region us-east-2 --name my-cluster
 
 this command will create/modify the kubernetes config file which lives in __~/.kube/config__.
 
-if you don't have the aws cli set up on your machine, you can follow the instructions here: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+if you don't have the aws cli set up on your machine, you can follow the instructions [here](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 
 now check that it shows information for your cluster
 ```bash
@@ -50,7 +50,7 @@ error: exec plugin: invalid apiVersion "client.authentication.k8s.io/v1alpha1"
 ```
 
 that means you probably have an old version of the aws cli on your mac. all you need to do
-is install a newer version. following the directions here: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+is install a newer version. following the directions [here](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 
 after you upgrade the aws cli, make sure you run the __update-kubeconfig__ command shown above.
 
