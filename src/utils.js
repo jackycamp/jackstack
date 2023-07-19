@@ -45,9 +45,9 @@ const createIndexPage = () => {
       
       <div class="main">  
         <div class="sidebar">
-          <a href="code_stuff.html">code stuff</a>
+          <a id="codestuff-link">code stuff</a>
           <a id="systems-link">systems</a>
-          <a href="books.html">books</a>
+          <a id="books-link">books</a>
           <a href="https://github.com/jackycamp">github</a>
           <a href="index.html">root</a>
         </div>
