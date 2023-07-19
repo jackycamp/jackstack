@@ -3,7 +3,6 @@ const systemsPages = [
 ];
 
 const handleSystemsClick = () => {
-    console.log("handle systems click");
     let contentNode = document.getElementById("content");
     contentNode.innerHTML = '';
 
@@ -13,7 +12,7 @@ const handleSystemsClick = () => {
     contentNode.appendChild(heading);
 
     let subheading = document.createElement('h3');
-    subheading.textContent = 'reflections on design and implementations.';
+    subheading.textContent = 'reflections, design, implementations, guides.';
 
     contentNode.appendChild(subheading);
 
