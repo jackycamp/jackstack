@@ -13,6 +13,18 @@ code, pre {
 font-family: 'Courier New', Courier, monospace;
 }
 
+a {
+  color: #fff;
+  text-decoration: underline;
+  transition: background-color 0.3s ease;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+a:hover {
+  background-color: #555;
+}
+
 pre {
   /* background-color: #2b2b2b; */
   /* padding: 10px; */
