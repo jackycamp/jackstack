@@ -78,5 +78,36 @@ const createIndexPage = () => {
     return html;
 }
 
+const get404Html = () => {
+  const html = 
+  `
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>jackstack</title>
+      <link rel="stylesheet" href="styles/index.css">
+    </head>
+    <body>
+
+    <div class="main">
+      <div class="content" style="flex-grow: 0">
+        <h1>four oh four</h1>
+        <h3>lol</h3>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2023 jackstack.lol. All rights reserved.</p>
+    </footer>
+    </body>
+  </html>
+  `;
+  return html;
+}
+
 module.exports.createPage = createPage;
 module.exports.createIndexPage = createIndexPage;
+module.exports.get404Html = get404Html;
