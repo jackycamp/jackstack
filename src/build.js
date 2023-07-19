@@ -94,5 +94,9 @@ const indexOutPath = path.resolve(distDir, 'index.html');
 const indexHtml = utils.createIndexPage();
 fs.writeFileSync(indexOutPath, indexHtml);
 
+const _404OutPath = path.resolve(distDir, '404.html');
+const _404Html = utils.get404Html();
+fs.writeFileSync(_404OutPath, _404Html);
+
 console.log("build done");
 
