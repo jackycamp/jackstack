@@ -1,4 +1,4 @@
-name:eks-getting-started
+name:Noob's guide to EKS
 date:07/01/2023
 label:systems
 
