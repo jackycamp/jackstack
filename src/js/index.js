@@ -1,8 +1,7 @@
-const systemsPages = [
-    { title: "Noob's guide to EKS", file: 'eks-getting-started.html'}
-];
-
-const bookPages = [];
+// populated at build time
+const systemsPages = __SYSTEMS_PAGES__;
+const bookPages = __BOOKS_PAGES__;
+const codeStuffPages = __CODESTUFF_PAGES__;
 
 const handleSystemsClick = () => {
     let contentNode = document.getElementById("content");
@@ -25,7 +24,7 @@ const handleSystemsClick = () => {
     systemsPages.forEach((page) => {
         let link = document.createElement('a');
         link.href = `pages/${page.file}`;
-        link.textContent = page.title;
+        link.textContent = page.name;
         list.appendChild(link);
     });
 }
