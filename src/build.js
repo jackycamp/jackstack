@@ -41,6 +41,7 @@ files.forEach((fileName) => {
     // meta portion of the file
     const metaLines = lines.slice(0,3);
     const label = metaLines.find((m) => m.startsWith("label")).split(":")[1];
+    const name = metaLines.find((m) => m.startsWith("name")).split(":")[1];
 
     // actual content that is converted to html
     const content = lines.slice(3).join("\n");
@@ -54,10 +55,12 @@ files.forEach((fileName) => {
     const outPath = path.resolve(distDir, 'pages', htmlFileName);
     fs.writeFileSync(outPath, html);
 
+    const fileMeta = { name, file: htmlFileName };
+
     // classify the page
-    if (label === 'systems') systemsPages.push(htmlFileName);
-    if (label === 'books') booksPages.push(htmlFileName);
-    if (label === 'codestuff') codestuffPages.push(htmlFileName);
+    if (label === 'systems') systemsPages.push(fileMeta);
+    if (label === 'books') booksPages.push(fileMeta);
+    if (label === 'codestuff') codestuffPages.push(fileMeta);
 });
 
 console.log("systemsPages: ", systemsPages);
@@ -87,6 +90,16 @@ jsFiles.forEach((fileName) => {
     const dstPath = path.resolve(distDir, fileName);
 
     fs.copyFileSync(srcPath, dstPath);
+
+    // for the index.js file, need to inject the category arrays
+    // into the distributed version.
+    if (fileName === 'index.js') {
+        let indexJsData = fs.readFileSync(dstPath, 'utf8');
+        indexJsData = indexJsData.replace('__SYSTEMS_PAGES__', JSON.stringify(systemsPages));
+        indexJsData = indexJsData.replace('__BOOKS_PAGES__', JSON.stringify(booksPages));
+        indexJsData = indexJsData.replace('__CODESTUFF_PAGES__', JSON.stringify(codestuffPages));
+        fs.writeFileSync(dstPath, indexJsData);
+    }
 });
 
 // generate entrypoint (dist/index.html)
