@@ -52,7 +52,35 @@ const handleBooksClick = () => {
     bookPages.forEach((page) => {
         let link = document.createElement('a');
         link.href = `pages/${page.file}`;
-        link.textContent = page.title;
+        link.textContent = page.name;
+        list.appendChild(link);
+    });
+
+};
+
+const handleCodeStuffClick = () => {
+    let contentNode = document.getElementById("content");
+    contentNode.innerHTML = '';
+
+    let heading = document.createElement('h1');
+    heading.textContent = 'books';
+
+    contentNode.appendChild(heading);
+
+    let subheading = document.createElement('h3');
+    let subheadingText = "random code stuff, thoughts, and stories"
+    subheading.textContent = subheadingText;
+
+    contentNode.appendChild(subheading);
+
+    let list = document.createElement('div');
+    list.classList = ['scrollable link_list'];
+    contentNode.appendChild(list);
+    
+    codeStuffPages.forEach((page) => {
+        let link = document.createElement('a');
+        link.href = `pages/${page.file}`;
+        link.textContent = page.name;
         list.appendChild(link);
     });
 
@@ -68,6 +96,11 @@ window.onload = () => {
     let booksLink = document.getElementById('books-link');
     if (booksLink) {
         booksLink.addEventListener('click', handleBooksClick)
+    }
+
+    let codestuffLink = document.getElementById('codestuff-link');
+    if (codestuffLink) {
+        codestuffLink.addEventListener('click', handleCodeStuffClick)
     }
 }
 
