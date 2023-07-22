@@ -26,8 +26,8 @@ __Mr. Baynes__ disguised as a Swedish gentleman.
 His true identity is Rudolph Wegener, a member of a
 German political organization wishing to halt Nazi takeover.
                 
-Naturally, as a piece from PKD, the barriers between reader and
-character blend together. Reality and truth are playthings for PKD; as
+The barriers between reader and character blend together. 
+Reality and truth are playthings for PKD; as
 if he wished the reader to become as mad as he was.
 
 The blur of reality touches all characters in the piece. Frank Frink
