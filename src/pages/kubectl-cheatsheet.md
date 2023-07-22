@@ -5,6 +5,8 @@ label:systems
 # kubectl command cheat sheet
 ### collection of kubectl commands and explanations that i reference frequently.
 
+__apply__
+
 create or update resources in a k8s cluster according to a configuration file.
 
 often used to spin up pods, deployments, jobs, etc.
@@ -13,7 +15,7 @@ often used to spin up pods, deployments, jobs, etc.
 kubectl apply -f my-manifest.yml
 ```
 
-__logging__ 
+__logs__ 
 
 ```bash
 # show stdout and stderr for a pod
@@ -27,13 +29,16 @@ kubectl logs jobs/my-job
 kubectl logs jobs/my-job -c my-container
 ```
 
+__describe__
+
 display information about a resource, includes configuration details, current status, events, etc.
 ```bash
 kubectl describe my-pod
 ```
 
 
-__exec commands__
+__exec__
+
 ```bash
 # open a shell inside a running container
 kubectl exec my-pod -c my-container -- /bin/bash
