@@ -17,22 +17,18 @@ __Robert Childan__ a scheming and racially frustrated white businessman who owns
 __Nobusuke Tagomi__ a Japanese bureaucrat and buddhist.
 
 
-Frank Frink a Jewish factory
+__Frank Frink__ a Jewish factory
 worker/laborer.
 
-Juliana Frink Frank's ex-wife. A judo instructor living in Colorado.
+__Juliana Frink__ Frank's ex-wife. A judo instructor living in Colorado.
         
-Mr. Baynes disguised as a
-Swedish gentleman. His true identity is Rudolph Wegener, a member of a
+__Mr. Baynes__ disguised as a Swedish gentleman. 
+His true identity is Rudolph Wegener, a member of a
 German political organization wishing to halt Nazi takeover.
-        
-
-        
+                
 Naturally, as a piece from PKD, the barriers between reader and
 character blend together. Reality and truth are playthings for PKD; as
 if he wished the reader to become as mad as he was.
-
-
 
 The blur of reality touches all characters in the piece. Frank Frink
 loses his job, is jailed away and headed for extermination due to his
@@ -43,8 +39,6 @@ reality where the Allies won the war (our reality?). Juliana realizes
 and accepts the Allies did in fact win the war after meeting with the
 author of The Grasshopper Lies Heavy, proving her existence and reality is fictional.
 
-
-
 The author does not do this subtly, he is upfront. Taunting. There is
 a book within the storyline, The Grasshopper Lies Heavy.
 Grasshopper portrays a reality where the Allies won WWII. Without
@@ -54,8 +48,6 @@ lives in a reality where the Allies won WWII but is reading a book
 where the Allies lost WWII but within that book there is another book
 where the Allies won WWII. It's all blurred. Nothing clear.
 Nothing true. All true. I can hear PKD laughing as I write this.
-
-
 
 Now, consider the title of this book. At first glance, the phrase
 "The Grasshopper Lies Heavy" may be a cryptic way of saying:
@@ -95,7 +87,7 @@ decision to be made. Perhaps this is a note on the laziness of
 individuals.
 
 
-Frank uses the I Chingto
+Frank uses the I Ching to
 determine whether or not to begin a business venture. Mr. Tagomi
 consults the I Ching when he
 is apprehensive of upcoming appointments, Juliana carries around the
