@@ -15,3 +15,10 @@ some pieces of said system consume the same inputs; the outputs of some pieces
 may be inputs to some other pieces. as the number of processing modules and number of
 inputs increased, this became messy, frustrating, and inefficient for our team.
 
+```python
+class MyPaths:
+    foo: "some_path.txt"
+    bar: "some_other.txt"
+
+```
+
