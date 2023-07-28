@@ -33,3 +33,56 @@ class MyPaths:
 mypaths = MyPaths(root="root_dir")
 ```
 
+behind the scenes, when you access an attribute, the base class will detect whether or not the attribute is a file item, and return the value accordingly. 
+
+if the attribute is a file item, we will join the item's path with the root and return a path string, otherwise, business as usual; we don't want to interfere with any methods or non-file attributes defined in the base class or the subclass.
+
+originally, i went with a decorator approach, heavily inspired by python's `dataclass` implementation.
+
+```python
+import os
+import types
+from functools import partial
+
+
+def _process_class(cls, root=None):
+    # only access user defined attributes
+    cls_attributes = {
+        name: value for name, value in vars(cls).items() if not name.startswith("__")
+    }
+
+    def getter(self, name: str, val: str):
+        root = self._root
+        if isinstance(root, list):
+            return os.path.join(*[*root, val])
+        return os.path.join(root, val)
+        
+    for name, val in cls_attributes.items():
+        default = getattr(cls, name)
+        _gettr = partial(getter, name=name, val=default)
+        prop = property(_gettr)
+        setattr(cls, name, prop)
+
+    cls._root = ""
+    if root is not None:
+        cls._root = root
+
+    return cls
+
+
+def pathmanager(cls=None, root=None, use_posix=False):
+    def wrap(cls):
+        return _process_class(cls, root, use_posix)
+
+    if cls is None:
+        return wrap
+
+    return wrap(cls)
+
+
+@pathmanager(root='root_dir')
+class MyPaths:
+    foo = "foo.txt"
+    ...
+```
+
