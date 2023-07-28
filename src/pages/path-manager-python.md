@@ -92,4 +92,59 @@ BUT.. i decided against this approach.
 
 if we wanted the class to be able to define its own methods and also have intellisense, this becomes non-trivial. there would be quite a bit of complexity in the implementation and it would probably be a pain to maintain.
 
+so, i went with a class based approach; below is the base class.
 
+```python
+
+class PathManager:
+    def __init__(self, root: Union[str, List[str]] = [], use_posix=False):
+        self._root = []
+        self.use_posix = use_posix
+
+        if isinstance(root, List):
+            self._root.extend(root)
+
+        if isinstance(root, str):
+            self._root.append(root)
+    
+    def __getattribute__(self, name: str):
+        val = super().__getattribute__(name)
+
+        # ignore private PathManager attributes (could be done more elegantly)
+        if name in ["use_posix", "_root", "root"]:
+            return val
+
+        # ignore the dunders
+        if name.startswith("__") and name.endswith("__"):
+            return val
+
+        joiner = posixpath.join if self.use_posix else os.path.join
+
+        # handle attributes of type str (just raw string paths or file names)
+        if isinstance(val, str):
+            return joiner(*[*self._root, val])
+
+        # otherwise, just return the val captured from super
+        return val
+
+
+    @property
+    def root(self) -> str:
+        joiner = posixpath.join if self.use_posix else os.path.join
+        aspath = joiner(*self._root)
+        return aspath
+
+    def setroot(self, root: Union[str, List[str]]):
+        if isinstance(root, List):
+            self._root = [*root]
+
+        if isinstance(root, str):
+            self._root = [root]
+
+    def add_root(self, root: Union[str, List[str]]):
+        if isinstance(root, List):
+            self._root.extend(root)
+
+        if isinstance(root, str):
+            self._root.append(root)
+```
