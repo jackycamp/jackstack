@@ -86,3 +86,10 @@ class MyPaths:
     ...
 ```
 
+this implementation is pretty straight forward. the base path manager function will generate getters on the fly for the attributes defined on the class. those getters are basically just invoking os.path.join and injecting the root where applicable.
+
+BUT.. i decided against this approach.
+
+if we wanted the class to be able to define its own methods and also have intellisense, this becomes non-trivial. there would be quite a bit of complexity in the implementation and it would probably be a pain to maintain.
+
+
