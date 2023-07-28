@@ -123,3 +123,11 @@ class PathManager:
         # otherwise, just return the val captured from super
         return val
 ```
+
+for the sake of explanation, i've omitted some quality of life functions such as setting the root.
+
+TODO: explain usage of this base class
+
+TODO: explain no nested dirs
+
+TODO: explain the Path instance
