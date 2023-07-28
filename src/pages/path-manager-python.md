@@ -92,7 +92,7 @@ BUT.. i decided against this approach.
 
 if we wanted the class to be able to define its own methods and also have intellisense, this becomes non-trivial. there would be quite a bit of complexity in the implementation and it would probably be a pain to maintain.
 
-so, i went with a class based approach; below is the base class.
+so, i went with a class based approach; below is skeletal version of the base class.
 
 ```python
 class PathManager:
@@ -109,7 +109,7 @@ class PathManager:
         val = super().__getattribute__(name)
 
         # ignore private PathManager attributes (could be done more elegantly)
-        if name in ["use_posix", "_root", "root"]:
+        if name in ["_root"]:
             return val
 
         # ignore the dunders
@@ -124,10 +124,33 @@ class PathManager:
         return val
 ```
 
-for the sake of explanation, i've omitted some quality of life functions such as setting the root.
+and you could subclass it like so
 
-TODO: explain usage of this base class
+```python
+class MyPaths(PathManager):
+    foo = "foo.txt"
+    bar = "bar.txt"
 
-TODO: explain no nested dirs
 
-TODO: explain the Path instance
+mypaths = MyPaths(root="root_dir")
+
+mypaths.foo
+>>> 'root_dir/foo.txt'
+mypaths.bar
+>>> 'root_dir/bar.txt'
+```
+
+however, what if foo.txt and bar.txt were actually in different directories? but those directories
+still had the same parent directory? you could kind of hack the subclass like so:
+
+
+```python
+class MyPaths(PathManager):
+    foo = "/foo_parent/foo.txt"
+    bar = "/bar_parent/bar.txt"
+```
+
+but we don't like hardcoded parent directories (not to mention this would break on windows).
+
+so let me present the __Path__ class.
+
