@@ -178,4 +178,4 @@ class Path:
 
 as you can see, a __Path__ instance has its own root. what i'm thinking here, the user of __PathManager__ could specify either a string or a __Path__ instance for the attributes of the subclass.
 
-when you access an attribute, the base class will check to see if its an instance of __Path__. if it is, 
+when you access an attribute, the base class will check to see if it's an instance of __Path__. if it is, then spread the __Path__ instance's root (if it even has one) along with the root defined for the __PathManager__ instance.
