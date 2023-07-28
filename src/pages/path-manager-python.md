@@ -4,6 +4,12 @@ label:codestuff
 
 # Path Manager in Python
 
+yeah yeah; i know what you're thinking. a path manager in python? how elementary!
+
+at the surface, i agree. this seems like a trivial problem (why not just maintain a __dict__ and invoke __os.path.join__). but let's say you have dozens of paths and files and this needs to be intuitive for other collaborators.
+
+this is trickier than you might expect.
+
 at one of my places of employment we had various systems around geo-processing tools and spatial algorithms; often dealing with a ridiculous number of files on disk.
 
 at the time, it was challenging to know which files were inputs or outputs for the pieces in the system. decent documentation didn't really help either as it was too separate from the code.
@@ -12,7 +18,7 @@ some pieces of said system consume the same inputs; the outputs of some pieces m
 
 my team agreed we should establish a single entry point and solid interface for all files the system might consume or produce.
 
-we cam up with a list of requirements:
+we came up with a list of requirements:
 
 - should be able to hit . and see all the files.
 - defining a file or path should be trivial.
@@ -154,3 +160,22 @@ but we don't like hardcoded parent directories (not to mention this would break 
 
 so let me present the __Path__ class.
 
+```python
+class Path:
+    def __init__(self, raw: str, root: Union[str, List[str]] = []):
+        self.raw = raw
+        self._root: List[str] = []
+
+        if isinstance(root, List):
+            self._root.extend(root)
+
+        if isinstance(root, str):
+            self._root.append(root)
+
+    def tostr(self):
+        return os.path.join(*[*self._root], self.raw)
+```
+
+as you can see, a __Path__ instance has its own root. what i'm thinking here, the user of __PathManager__ could specify either a string or a __Path__ instance for the attributes of the subclass.
+
+when you access an attribute, the base class will check to see if its an instance of __Path__. if it is, 
