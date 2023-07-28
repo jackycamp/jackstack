@@ -4,21 +4,32 @@ label:codestuff
 
 # Path Manager in Python
 
-at one of my places of employment we had various systems around geo-processing tools
-and spatial algorithms; often dealing with a ridiculous number of files on disk.
+at one of my places of employment we had various systems around geo-processing tools and spatial algorithms; often dealing with a ridiculous number of files on disk.
 
-at the time, it was challenging to know which files were inputs or outputs
-for the pieces in the system. decent documentation didn't really help
-either as it was too separate from the code.
+at the time, it was challenging to know which files were inputs or outputs for the pieces in the system. decent documentation didn't really help either as it was too separate from the code.
 
-some pieces of said system consume the same inputs; the outputs of some pieces
-may be inputs to some other pieces. as the number of processing modules and number of
-inputs increased, this became messy, frustrating, and inefficient for our team.
+some pieces of said system consume the same inputs; the outputs of some pieces may be inputs to some other pieces. as the number of processing modules and number of inputs increased, this became messy, frustrating, and inefficient for our team.
+
+my team agreed we should establish a single entry point and solid interface for all files the system might consume or produce.
+
+we cam up with a list of requirements:
+
+- should be able to hit . and see all the files.
+- defining a file or path should be trivial.
+- needs to support nested directories.
+- always takes care of `os.path.join` for us.
+- documenting a path should be easy.
+
+i figured we should be able to define a subclass and instance like so:
 
 ```python
 class MyPaths:
     foo: "some_path.txt"
-    bar: "some_other.txt"
+    """some info about the foo path"""
 
+    bar: "some_other.txt"
+    """bar is used for x"""
+
+mypaths = MyPaths(root="root_dir")
 ```
 
