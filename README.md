@@ -8,3 +8,9 @@ jackstack is hosted in GCP's cloud storage with a load balancer sitting in front
 All items in `public/` are located in that bucket.
 
 this is a basic js, html, and css site. sometimes there is genius in simplicity...
+
+```bash
+# to build
+npm run build
+
+```
