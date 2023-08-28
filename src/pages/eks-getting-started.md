@@ -54,6 +54,8 @@ is install a newer version. following the directions [here](https://docs.aws.ama
 
 after you upgrade the aws cli, make sure you run the __update-kubeconfig__ command shown above.
 
+TODO: User or role that created EKS cluster is the only IAM entity that has access to EKS cluster. Kubernetes has its own permissions model, so you need to add additional users to your EKS cluster. You may edit aws-auth configmap to look like this:
+
 now we need to add a node group to our cluster.
 
 ```bash
