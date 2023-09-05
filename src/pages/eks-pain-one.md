@@ -37,6 +37,9 @@ key: k8s.io/cluster-autoscaler/node-template/label/baz
 value: buzz
 ```
 
+references
+https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#how-can-i-scale-a-node-group-to-0
+
 
 
 
