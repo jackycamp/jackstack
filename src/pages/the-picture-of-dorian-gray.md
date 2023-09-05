@@ -12,3 +12,7 @@ note: what if we all had a visual representation of our soul? what if this repre
 note: the misleading enchantment of art and one's desire to make tangible that which makes one enchanted.
 
 note: Narcissus, in Greek Mythology.
+
+note: deindividuation, moral disengagement, self-serving bias
+
+note: Ring of gyges
