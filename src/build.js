@@ -63,10 +63,6 @@ files.forEach((fileName) => {
     if (label === 'codestuff') codestuffPages.push(fileMeta);
 });
 
-console.log("systemsPages: ", systemsPages);
-console.log("booksPages", booksPages);
-console.log("code stuff pages: ", codestuffPages);
-
 
 console.log("generating stylesheets");
 // just copies over stylesheets, nothing fancy
