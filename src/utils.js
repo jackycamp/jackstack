@@ -62,9 +62,9 @@ const createIndexPage = () => {
     
       <!-- small screen nav bar on bottom -->
       <div class="bottom-nav">
-          <a id="codestuff-link">code stuff</a>
-          <a id="systems-link">systems</a>
-          <a id="books-link">books</a>
+          <a id="codestuff-link-sm">code stuff</a>
+          <a id="systems-link-sm">systems</a>
+          <a id="books-link-sm">books</a>
           <a href="https://github.com/jackycamp">github</a>
           <a href="index.html">root</a>
       </div>

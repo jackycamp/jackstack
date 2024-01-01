@@ -101,6 +101,21 @@ window.onload = () => {
     if (codestuffLink) {
         codestuffLink.addEventListener('click', handleCodeStuffClick)
     }
+
+    let sysLinkSm = document.getElementById("systems-link-sm");
+    if (sysLinkSm) {
+        sysLinkSm.addEventListener('click', handleSystemsClick);
+    }
+
+    let booksLinkSm = document.getElementById("books-link-sm");
+    if (booksLinkSm) {
+        booksLinkSm.addEventListener('click', handleBooksClick);
+    }
+
+    let codestuffLinkSm = document.getElementById("codestuff-link-sm");
+    if (codestuffLinkSm) {
+        codestuffLinkSm.addEventListener('click', handleCodeStuffClick);
+    }
 }
 
 
