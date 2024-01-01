@@ -54,7 +54,7 @@ const createIndexPage = () => {
         <div id="content" class="content">
           <h1>jackstack</h1>
           <h3>welcome to the home of my personal logs.</h3>
-          <h3>explore my writings on systems design, code stuff, books, and other randomness.</h3>
+          <h3>explore my writings on systems, programming, books, etc.</h3>
           <h3>reach me at: jackcampa at p m dot me</h3>
           <h3>lol</h3>
         </div>
@@ -62,14 +62,14 @@ const createIndexPage = () => {
     
       <!-- small screen nav bar on bottom -->
       <div class="bottom-nav">
-        <a href="code_stuff.html">code stuff</a>
-        <a href="404.html">systems</a>
-        <a href="books.html">books</a>
-        <a href="https://github.com/jackycamp">github</a>
-        <a href="index.html">root</a>
+          <a id="codestuff-link">code stuff</a>
+          <a id="systems-link">systems</a>
+          <a id="books-link">books</a>
+          <a href="https://github.com/jackycamp">github</a>
+          <a href="index.html">root</a>
       </div>
       <footer>
-        <p>&copy; 2023 jackstack.lol. All rights reserved.</p>
+        <p>&copy; 2024 jackstack.lol. All rights reserved.</p>
       </footer>
       </body>
     </html>
@@ -100,7 +100,7 @@ const get404Html = () => {
     </div>
 
     <footer>
-      <p>&copy; 2023 jackstack.lol. All rights reserved.</p>
+      <p>&copy; 2024 jackstack.lol. All rights reserved.</p>
     </footer>
     </body>
   </html>
