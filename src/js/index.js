@@ -39,8 +39,7 @@ const handleBooksClick = () => {
     contentNode.appendChild(heading);
 
     let subheading = document.createElement('h3');
-    let subheadingText = "sometimes i collect notes and summaries from what i've read and compile them "
-    subheadingText += "as an auxiliary mechanism for my own capture and retention purposes."
+    let subheadingText = "sometimes i write about what i read."
     subheading.textContent = subheadingText;
 
     contentNode.appendChild(subheading);
@@ -63,7 +62,7 @@ const handleCodeStuffClick = () => {
     contentNode.innerHTML = '';
 
     let heading = document.createElement('h1');
-    heading.textContent = 'books';
+    heading.textContent = 'code stuff';
 
     contentNode.appendChild(heading);
 
