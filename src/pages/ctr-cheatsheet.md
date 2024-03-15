@@ -1,18 +1,18 @@
 name:ctr cheat sheet
 date:08/27/2023
-label:codestuff
+label:programming
 
 # containerd cli cheat sheet
 
 ### collection of ctr commands and explanations that i reference frequently.
 
-__pull an image__
+**pull an image**
 
 ```bash
 ctr image pull my-repo/my-image:latest
 ```
 
-__running containers__
+**running containers**
 
 basic usage
 
@@ -36,3 +36,4 @@ sudo ctr run \
 --mount type=bind,src=/path/on/host,dst=/path/in/container,options=rbind:rw \
 my-image:latest my-container /bin/bash
 ```
+
