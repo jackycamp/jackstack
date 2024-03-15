@@ -46,9 +46,9 @@ const createIndexPage = () => {
       <div class="main">  
         <div class="sidebar">
           <a href="index.html">root</a>
-          <a id="codestuff-link">code stuff</a>
-          <a id="systems-link">systems</a>
+          <a id="programming-link">programming</a>
           <a id="books-link">books</a>
+          <a id="else-link">else</a>
           <a href="https://github.com/jackycamp">github</a>
           <a href="about.html">about me</a>
         </div>
@@ -64,9 +64,9 @@ const createIndexPage = () => {
       <!-- small screen nav bar on bottom -->
       <div class="bottom-nav">
           <a href="index.html">root</a>
-          <a id="codestuff-link-sm">code stuff</a>
-          <a id="systems-link-sm">systems</a>
+          <a id="programming-link-sm">programming</a>
           <a id="books-link-sm">books</a>
+          <a id="else-link-sm">else</a>
           <a href="https://github.com/jackycamp">github</a>
           <a href="about.html">about me</a>
       </div>
@@ -164,4 +164,3 @@ module.exports.createPage = createPage;
 module.exports.createIndexPage = createIndexPage;
 module.exports.get404Html = get404Html;
 module.exports.createAboutPage = createAboutPage;
-
