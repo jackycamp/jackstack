@@ -1,6 +1,6 @@
 name:Kubernetes CPU limit nuance
 date:10/23/23
-label:systems
+label:none
 
 # Kubernetes CPU Limits aren't really limits
 
@@ -13,4 +13,3 @@ When I rolled out my first kubernetes cluster it was mainly for scheduling and m
 But, I should've read the docs a bit more closely.
 
 See, when I hear the word limit, I think a hard cap. Nothing goes beyond the limit. Through some pain, I learned Kubernetes cpu limits are certainly not hard caps. More like general guidelines to assist the scheduler (and thus leading to higher quality of service or QOS).
-

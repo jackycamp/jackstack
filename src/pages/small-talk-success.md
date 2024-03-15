@@ -1,6 +1,6 @@
 name:Successful Small Talk is a Search Problem
 date:03/05/2024
-label:systems
+label:else
 
 # Successful Small Talk is a Search Problem
 

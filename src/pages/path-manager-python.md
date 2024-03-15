@@ -1,12 +1,12 @@
 name:Path Manager in Python
 date:07/01/2023
-label:codestuff
+label:none
 
 # Path Manager in Python
 
 yeah yeah; i know what you're thinking. a path manager in python? how elementary!
 
-at the surface, i agree. this seems like a trivial problem (why not just maintain a __dict__ and invoke __os.path.join__). but let's say you have dozens of paths and files and this needs to be intuitive for other collaborators.
+at the surface, i agree. this seems like a trivial problem (why not just maintain a **dict** and invoke **os.path.join**). but let's say you have dozens of paths and files and this needs to be intuitive for other collaborators.
 
 this is trickier than you might expect.
 
@@ -39,7 +39,7 @@ class MyPaths:
 mypaths = MyPaths(root="root_dir")
 ```
 
-behind the scenes, when you access an attribute, the base class will detect whether or not the attribute is a file item, and return the value accordingly. 
+behind the scenes, when you access an attribute, the base class will detect whether or not the attribute is a file item, and return the value accordingly.
 
 if the attribute is a file item, we will join the item's path with the root and return a path string, otherwise, business as usual; we don't want to interfere with any methods or non-file attributes defined in the base class or the subclass.
 
@@ -62,7 +62,7 @@ def _process_class(cls, root=None):
         if isinstance(root, list):
             return os.path.join(*[*root, val])
         return os.path.join(root, val)
-        
+
     for name, val in cls_attributes.items():
         default = getattr(cls, name)
         _gettr = partial(getter, name=name, val=default)
@@ -110,7 +110,7 @@ class PathManager:
 
         if isinstance(root, str):
             self._root.append(root)
-    
+
     def __getattribute__(self, name: str):
         val = super().__getattribute__(name)
 
@@ -149,7 +149,6 @@ mypaths.bar
 however, what if foo.txt and bar.txt were actually in different directories? but those directories
 still had the same parent directory? you could kind of hack the subclass like so:
 
-
 ```python
 class MyPaths(PathManager):
     foo = "/foo_parent/foo.txt"
@@ -158,7 +157,7 @@ class MyPaths(PathManager):
 
 but we don't like hardcoded parent directories (not to mention this would break on windows).
 
-so let me present the __Path__ class.
+so let me present the **Path** class.
 
 ```python
 class Path:
@@ -176,6 +175,6 @@ class Path:
         return os.path.join(*[*self._root], self.raw)
 ```
 
-as you can see, a __Path__ instance has its own root. what i'm thinking here, the user of __PathManager__ could specify either a string or a __Path__ instance for the attributes of the subclass.
+as you can see, a **Path** instance has its own root. what i'm thinking here, the user of **PathManager** could specify either a string or a **Path** instance for the attributes of the subclass.
 
-when you access an attribute, the base class will check to see if it's an instance of __Path__. if it is, then spread the __Path__ instance's root (if it even has one) along with the root defined for the __PathManager__ instance.
+when you access an attribute, the base class will check to see if it's an instance of **Path**. if it is, then spread the **Path** instance's root (if it even has one) along with the root defined for the **PathManager** instance.
