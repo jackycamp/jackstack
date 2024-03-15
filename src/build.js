@@ -29,6 +29,8 @@ const files = fs.readdirSync(pagesDir);
 const systemsPages = [];
 const booksPages = [];
 const codestuffPages = [];
+const programmingPages = [];
+const elsePages = [];
 
 console.log("building pages");
 
@@ -57,9 +59,11 @@ files.forEach((fileName) => {
   const fileMeta = { name, file: htmlFileName };
 
   // classify the page
-  if (label === "systems") systemsPages.push(fileMeta);
+  if (label === "programming") programmingPages.push(fileMeta);
+  if (label === "else") elsePages.push(fileMeta);
   if (label === "books") booksPages.push(fileMeta);
-  if (label === "codestuff") codestuffPages.push(fileMeta);
+  // if (label === "systems") systemsPages.push(fileMeta);
+  // if (label === "codestuff") codestuffPages.push(fileMeta);
 });
 
 console.log("generating stylesheets");
@@ -90,16 +94,16 @@ jsFiles.forEach((fileName) => {
   if (fileName === "index.js") {
     let indexJsData = fs.readFileSync(dstPath, "utf8");
     indexJsData = indexJsData.replace(
-      "__SYSTEMS_PAGES__",
-      JSON.stringify(systemsPages),
-    );
-    indexJsData = indexJsData.replace(
       "__BOOKS_PAGES__",
       JSON.stringify(booksPages),
     );
     indexJsData = indexJsData.replace(
-      "__CODESTUFF_PAGES__",
-      JSON.stringify(codestuffPages),
+      "__PROGRAMMING_PAGES__",
+      JSON.stringify(programmingPages),
+    );
+    indexJsData = indexJsData.replace(
+      "__ELSE_PAGES__",
+      JSON.stringify(elsePages),
     );
     fs.writeFileSync(dstPath, indexJsData);
   }
