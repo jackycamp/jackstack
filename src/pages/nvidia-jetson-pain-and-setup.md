@@ -186,3 +186,23 @@ jtop
 ```
 
 ## References
+
+https://docs.nvidia.com/sdk-manager/1.9.3/docker-containers/index.html#docker-image-usage
+
+https://docs.nvidia.com/sdk-manager/1.9.3/sdkm-command-line-install/index.html
+
+https://forums.developer.nvidia.com/t/jetson-orin-nano-dead-on-arrival-sdk-flashing-problem/287153
+
+https://docs.nvidia.com/sdk-manager/1.9.3/archives/index.html
+
+https://github.com/atinfinity/sdk_manager_docker?tab=readme-ov-file
+
+https://developer.nvidia.com/embedded/jetson-linux-r3550
+
+https://docs.nvidia.com/jetson/archives/r35.3.1/DeveloperGuide/text/IN/QuickStart.html#in-quickstart
+
+https://forums.developer.nvidia.com/t/has-anyone-been-able-to-install-from-the-docker-version-of-sdkmanager-to-the-orin-nano-dev-kit/250938/6
+
+https://forums.developer.nvidia.com/t/sdk-manager-flash-jetson-os-issues-device-is-not-in-recovery-mode/72992/6
+
+https://forums.developer.nvidia.com/t/sdkmanager-fails-with-chroot-failed-to-run-command-dpkg-exec-format-error/188560
