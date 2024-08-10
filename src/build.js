@@ -26,11 +26,9 @@ fs.mkdirSync(outStylesDir);
 const pagesDir = path.resolve(__dirname, "pages");
 const files = fs.readdirSync(pagesDir);
 
-const systemsPages = [];
-const booksPages = [];
-const codestuffPages = [];
-const programmingPages = [];
-const elsePages = [];
+let booksPages = [];
+let programmingPages = [];
+let elsePages = [];
 
 console.log("building pages");
 
@@ -43,6 +41,10 @@ files.forEach((fileName) => {
   const metaLines = lines.slice(0, 3);
   const label = metaLines.find((m) => m.startsWith("label")).split(":")[1];
   const name = metaLines.find((m) => m.startsWith("name")).split(":")[1];
+  const rawDate = metaLines.find((m) => m.startsWith("date")).split(":")[1];
+  const [month, day, year] = rawDate.split("/");
+  const date = new Date(year, month - 1, day);
+  console.log("date", rawDate, date);
 
   // actual content that is converted to html
   const content = lines.slice(3).join("\n");
@@ -56,14 +58,12 @@ files.forEach((fileName) => {
   const outPath = path.resolve(distDir, "pages", htmlFileName);
   fs.writeFileSync(outPath, html);
 
-  const fileMeta = { name, file: htmlFileName };
+  const fileMeta = { name, file: htmlFileName, date };
 
   // classify the page
   if (label === "programming") programmingPages.push(fileMeta);
   if (label === "else") elsePages.push(fileMeta);
   if (label === "books") booksPages.push(fileMeta);
-  // if (label === "systems") systemsPages.push(fileMeta);
-  // if (label === "codestuff") codestuffPages.push(fileMeta);
 });
 
 console.log("generating stylesheets");
@@ -77,6 +77,11 @@ styleFiles.forEach((fileName) => {
 
   fs.copyFileSync(srcPath, dstPath);
 });
+
+console.log("sorting pages by date");
+programmingPages = programmingPages.sort((a, b) => b.date - a.date);
+booksPages = booksPages.sort((a, b) => b.date - a.date);
+elsePages = elsePages.sort((a, b) => b.date - a.date);
 
 console.log("generating js");
 // copy over the js
