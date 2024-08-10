@@ -44,9 +44,6 @@ pub async fn from_local_cookies() -> Result<Self, Box<dyn std::error::Error>> {
         Err(e) => Err(Box::new(e)),
     }
 }
-
-
-
 ```
 
 As you can see, this code is pretty inflated.
