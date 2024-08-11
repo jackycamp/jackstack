@@ -48,8 +48,9 @@ code {
 .main {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 90vh;
+  /*align-items: center;*/
+  /*height: 90vh;*/
+  padding-top: 5rem;
   /* border: 1px solid green; */
 }
 
@@ -724,9 +725,18 @@ span.cm-def {
 }
 
 .content {
-  max-width: 40rem;
-  flex-grow: 1;
-  padding: 20px;
+  /*max-width: 40rem;*/
+  /*flex-grow: 1;*/
+  /*padding: 20px;*/
+  padding: 0 20px;
+}
+
+.page-entry {
+  padding: 1rem 0;
+}
+
+.page-entry h4 {
+  font-weight: semibold;
 }
 
 .article {
@@ -882,4 +892,3 @@ p {
     text-align: center;
   }
 }
-
