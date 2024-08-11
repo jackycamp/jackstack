@@ -11,6 +11,27 @@ const head = `
     </head>
 `;
 
+const rootPageHead = `
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>jackstack</title>
+        <link rel="stylesheet" href="styles/index.css">
+    </head>
+`;
+
+const pageEntryElement = (page) => {
+  // TODO: route to page
+  const html = `
+  <div>
+    <h4>${page.name}</h4>
+    <p>${page.date}</p>
+  </div>
+  `;
+  return html;
+};
+
 const createPage = (pageHtml) => {
   const html = `
     <!DOCTYPE html>
@@ -160,7 +181,49 @@ const get404Html = () => {
   return html;
 };
 
+const sidebar = (links) => {
+  const linksAsElements = links.map(
+    (link) => `<a href="${link}.html">${link}</a>`,
+  );
+  const asString = `
+  <div class="sidebar">
+    <a href="index.html">root</a>
+    ${linksAsElements.join(" ")}
+    <a href="https://github.com/jackycamp">github</a>
+    <a href="about.html">about me</a>
+  </div>
+  `;
+  return asString;
+};
+
+const smallScreenNavBar = () => {
+  // TODO:
+};
+
+const categoryPage = (pages, sidebarStr) => {
+  const pageElements = pages.map((p) => pageEntryElement(p));
+  const html = `
+    <!DOCTYPE html>
+    <html lang="en">
+    ${rootPageHead}
+    <body>
+        <div class="main">
+          ${sidebarStr}
+          <div id="content" class="content">
+            ${pageElements.join(" ")}
+          </div>
+        </div>
+        <div class="whitespace"></div>
+    </body>
+    </html>
+    `;
+
+  return html;
+};
+
 module.exports.createPage = createPage;
 module.exports.createIndexPage = createIndexPage;
 module.exports.get404Html = get404Html;
 module.exports.createAboutPage = createAboutPage;
+module.exports.sidebar = sidebar;
+module.exports.categoryPage = categoryPage;
