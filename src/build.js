@@ -80,7 +80,7 @@ const sidebar = utils.sidebar(links);
 Object.keys(fileGroups).forEach((group) => {
   console.log("generating page for group", group);
   const pages = fileGroups[group];
-  const groupPage = utils.categoryPage(pages, sidebar);
+  const groupPage = utils.categoryPage(group, pages, sidebar);
   const outpath = path.resolve(distDir, `${group}.html`);
   fs.writeFileSync(outpath, groupPage);
 });

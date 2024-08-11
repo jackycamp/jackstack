@@ -24,7 +24,7 @@ const rootPageHead = `
 const pageEntryElement = (page) => {
   // TODO: route to page
   const html = `
-  <div>
+  <div class='page-entry'>
     <h4>${page.name}</h4>
     <p>${page.date}</p>
   </div>
@@ -200,7 +200,7 @@ const smallScreenNavBar = () => {
   // TODO:
 };
 
-const categoryPage = (pages, sidebarStr) => {
+const categoryPage = (name, pages, sidebarStr) => {
   const pageElements = pages.map((p) => pageEntryElement(p));
   const html = `
     <!DOCTYPE html>
@@ -210,6 +210,7 @@ const categoryPage = (pages, sidebarStr) => {
         <div class="main">
           ${sidebarStr}
           <div id="content" class="content">
+            <h2>${name}</h2>
             ${pageElements.join(" ")}
           </div>
         </div>
