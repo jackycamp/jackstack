@@ -26,6 +26,65 @@ fs.mkdirSync(outStylesDir);
 const pagesDir = path.resolve(__dirname, "pages");
 const files = fs.readdirSync(pagesDir);
 
+// TODO:
+// process each file
+// handle labels dynamically
+// build "category" pages in accordance with each unique label encountered
+// sidebar will also contain those categories (as well as the standard about, github, etc)
+
+const fileGroups = {};
+
+files.forEach((fileName) => {
+  const filePath = path.resolve(pagesDir, fileName);
+  const fileData = fs.readFileSync(filePath, "utf8");
+  const lines = fileData.split("\n");
+
+  // meta portion of the .md file
+  const metaLines = lines.slice(0, 3);
+  const label = metaLines.find((m) => m.startsWith("label")).split(":")[1];
+  const name = metaLines.find((m) => m.startsWith("name")).split(":")[1];
+  const rawDate = metaLines.find((m) => m.startsWith("date")).split(":")[1];
+  const [month, day, year] = rawDate.split("/");
+  const date = new Date(year, month - 1, day);
+  console.log("date", rawDate, date);
+
+  // actual content that is converted to html
+  const content = lines.slice(3).join("\n");
+  const body = marked.parse(content);
+  const html = utils.createPage(body);
+
+  // create the html file
+  let htmlFileName = fileName.split(".md")[0];
+  htmlFileName += ".html";
+  console.log("htmlFileName", htmlFileName);
+  const outPath = path.resolve(distDir, "pages", htmlFileName);
+  fs.writeFileSync(outPath, html);
+
+  if (!(label in fileGroups)) {
+    fileGroups[label] = [];
+  }
+
+  fileGroups[label].push({ name, file: htmlFileName, date });
+});
+
+console.log("File Groups", fileGroups);
+
+// TODO: build side bar with keys from FileGroups
+const links = Object.keys(fileGroups);
+console.log("dynamic links: ", links);
+const sidebar = utils.sidebar(links);
+
+// TODO: for each key in FileGroups
+// -> build a page that renders each file-meta
+// -> for each category page, they will use the sidebar
+Object.keys(fileGroups).forEach((group) => {
+  console.log("generating page for group", group);
+  const pages = fileGroups[group];
+  const groupPage = utils.categoryPage(pages, sidebar);
+  const outpath = path.resolve(distDir, `${group}.html`);
+  fs.writeFileSync(outpath, groupPage);
+});
+
 let booksPages = [];
 let programmingPages = [];
 let elsePages = [];
