@@ -80,10 +80,6 @@ Object.keys(fileGroups).forEach((group) => {
   fs.writeFileSync(outpath, groupPage);
 });
 
-let booksPages = [];
-let programmingPages = [];
-let elsePages = [];
-
 console.log("generating stylesheets");
 // just copies over stylesheets, nothing fancy
 const stylesDir = path.resolve(__dirname, "styles");
@@ -96,13 +92,7 @@ styleFiles.forEach((fileName) => {
   fs.copyFileSync(srcPath, dstPath);
 });
 
-console.log("sorting pages by date");
-programmingPages = programmingPages.sort((a, b) => b.date - a.date);
-booksPages = booksPages.sort((a, b) => b.date - a.date);
-elsePages = elsePages.sort((a, b) => b.date - a.date);
-
 console.log("generating js");
-// copy over the js
 const jsDir = path.resolve(__dirname, "js");
 const jsFiles = fs.readdirSync(jsDir);
 
