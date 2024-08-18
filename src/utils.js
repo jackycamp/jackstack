@@ -57,8 +57,7 @@ const createPage = (pageHtml) => {
   return html;
 };
 
-const createIndexPage = (sideBarStr) => {
-  // FIXME: should be using dynamic sidebar
+const createIndexPage = (sideBarStr, smallScreenNavBarStr) => {
   const html = `
     <!DOCTYPE html>
     <html lang="en">
@@ -78,14 +77,7 @@ const createIndexPage = (sideBarStr) => {
         </div>
     
         <!-- small screen nav bar on bottom -->
-        <div class="bottom-nav">
-            <a href="index.html">root</a>
-            <a id="programming-link-sm">programming</a>
-            <a id="books-link-sm">books</a>
-            <a id="else-link-sm">else</a>
-            <a href="https://github.com/jackycamp">github</a>
-            <a href="about.html">about me</a>
-        </div>
+        ${smallScreenNavBarStr}
         <footer>
           <p>&copy; 2024 jackstack.lol. All rights reserved.</p>
         </footer>
@@ -191,11 +183,22 @@ const sidebar = (links) => {
   return asString;
 };
 
-const smallScreenNavBar = () => {
-  // TODO:
+const smallScreenNavBar = (links) => {
+  const linksAsElements = links.map(
+    (link) => `<a href="${link}.html">${link}</a>`,
+  );
+  const asString = `
+  <div class="bottom-nav">
+      <a href="index.html">root</a>
+      ${linksAsElements.join(" ")}
+      <a href="https://github.com/jackycamp">github</a>
+      <a href="about.html">about me</a>
+  </div>
+`;
+  return asString;
 };
 
-const categoryPage = (name, pages, sidebarStr) => {
+const categoryPage = (name, pages, sidebarStr, smallScreenNavBarStr) => {
   const pageElements = pages
     .sort((a, b) => b.date - a.date)
     .map((p) => pageEntryElement(p));
@@ -211,6 +214,7 @@ const categoryPage = (name, pages, sidebarStr) => {
             ${pageElements.join(" ")}
           </div>
         </div>
+        ${smallScreenNavBarStr}
         <div class="whitespace"></div>
     </body>
     </html>
@@ -224,4 +228,5 @@ module.exports.createIndexPage = createIndexPage;
 module.exports.get404Html = get404Html;
 module.exports.createAboutPage = createAboutPage;
 module.exports.sidebar = sidebar;
+module.exports.smallScreenNavBar = smallScreenNavBar;
 module.exports.categoryPage = categoryPage;

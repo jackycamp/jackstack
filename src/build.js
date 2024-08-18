@@ -68,6 +68,7 @@ console.log("File Groups", fileGroups);
 const links = Object.keys(fileGroups);
 console.log("dynamic links: ", links);
 const sidebar = utils.sidebar(links);
+const smallScreenNavBar = utils.smallScreenNavBar(links);
 
 // for each key in FileGroups
 // -> build a page that renders each file-meta
@@ -75,7 +76,12 @@ const sidebar = utils.sidebar(links);
 Object.keys(fileGroups).forEach((group) => {
   console.log("generating page for group", group);
   const pages = fileGroups[group];
-  const groupPage = utils.categoryPage(group, pages, sidebar);
+  const groupPage = utils.categoryPage(
+    group,
+    pages,
+    sidebar,
+    smallScreenNavBar,
+  );
   const outpath = path.resolve(distDir, `${group}.html`);
   fs.writeFileSync(outpath, groupPage);
 });
@@ -117,7 +123,7 @@ jsFiles.forEach((fileName) => {
 
 // generate entrypoint (dist/index.html)
 const indexOutPath = path.resolve(distDir, "index.html");
-const indexHtml = utils.createIndexPage(sidebar);
+const indexHtml = utils.createIndexPage(sidebar, smallScreenNavBar);
 fs.writeFileSync(indexOutPath, indexHtml);
 
 const aboutPath = path.resolve(distDir, "about.html");
