@@ -209,7 +209,9 @@ const smallScreenNavBar = () => {
 };
 
 const categoryPage = (name, pages, sidebarStr) => {
-  const pageElements = pages.map((p) => pageEntryElement(p));
+  const pageElements = pages
+    .sort((a, b) => b.date - a.date)
+    .map((p) => pageEntryElement(p));
   const html = `
     <!DOCTYPE html>
     <html lang="en">
