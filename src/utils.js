@@ -21,11 +21,19 @@ const rootPageHead = `
     </head>
 `;
 
+/**
+ * ## Page Entry Element
+ *
+ * Constructs a page entry element given a `page` object.
+ * @param page.file (string): html file name of the page.
+ * @param page.name (string): the display name of the page.
+ * @param page.date (Date): the date of the page.
+ */
 const pageEntryElement = (page) => {
   // TODO: route to page
   const html = `
   <div class='page-entry'>
-    <h4>${page.name}</h4>
+    <a href="pages/${page.file}">${page.name}</a>
     <p>${page.date}</p>
   </div>
   `;
