@@ -30,9 +30,8 @@ const rootPageHead = `
  * @param page.date (Date): the date of the page.
  */
 const pageEntryElement = (page) => {
-  // TODO: route to page
   const html = `
-  <div class='page-entry'>
+  <div class='page-entry' onclick="this.querySelector('a').click();">
     <a href="pages/${page.file}">${page.name}</a>
     <p>${page.date}</p>
   </div>
