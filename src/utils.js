@@ -57,51 +57,38 @@ const createPage = (pageHtml) => {
   return html;
 };
 
-const createIndexPage = () => {
+const createIndexPage = (sideBarStr) => {
   // FIXME: should be using dynamic sidebar
   const html = `
     <!DOCTYPE html>
     <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>jackstack</title>
-        <link rel="stylesheet" href="styles/index.css">
-      </head>
+      ${rootPageHead}
       <body>
         <script src="index.js"></script>
       
-      <div class="main">  
-        <div class="sidebar">
-          <a href="index.html">root</a>
-          <a href="programming.html">programming</a>
-          <a href="books.html">books</a>
-          <a href="else.html">else</a>
-          <a href="https://github.com/jackycamp">github</a>
-          <a href="about.html">about me</a>
+        <div class="main">  
+          ${sideBarStr}
+          <div id="content" class="content">
+            <h1>jackstack</h1>
+            <h3>explore my writings on programming, systems, books, etc.</h3>
+            <br />
+            <h3 >reach me at: jackcampa at p m dot me</h3>
+            <h3>lol</h3>
+          </div>
         </div>
-        <div id="content" class="content">
-          <h1>jackstack</h1>
-          <h3>explore my writings on programming, systems, books, etc.</h3>
-          <br />
-          <h3 >reach me at: jackcampa at p m dot me</h3>
-          <h3>lol</h3>
-        </div>
-      </div>
     
-      <!-- small screen nav bar on bottom -->
-      <div class="bottom-nav">
-          <a href="index.html">root</a>
-          <a id="programming-link-sm">programming</a>
-          <a id="books-link-sm">books</a>
-          <a id="else-link-sm">else</a>
-          <a href="https://github.com/jackycamp">github</a>
-          <a href="about.html">about me</a>
-      </div>
-      <footer>
-        <p>&copy; 2024 jackstack.lol. All rights reserved.</p>
-      </footer>
+        <!-- small screen nav bar on bottom -->
+        <div class="bottom-nav">
+            <a href="index.html">root</a>
+            <a id="programming-link-sm">programming</a>
+            <a id="books-link-sm">books</a>
+            <a id="else-link-sm">else</a>
+            <a href="https://github.com/jackycamp">github</a>
+            <a href="about.html">about me</a>
+        </div>
+        <footer>
+          <p>&copy; 2024 jackstack.lol. All rights reserved.</p>
+        </footer>
       </body>
     </html>
     `;

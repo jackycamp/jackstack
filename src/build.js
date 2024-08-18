@@ -69,7 +69,7 @@ const links = Object.keys(fileGroups);
 console.log("dynamic links: ", links);
 const sidebar = utils.sidebar(links);
 
-// TODO: for each key in FileGroups
+// for each key in FileGroups
 // -> build a page that renders each file-meta
 // -> for each category page, they will use the sidebar
 Object.keys(fileGroups).forEach((group) => {
@@ -117,7 +117,7 @@ jsFiles.forEach((fileName) => {
 
 // generate entrypoint (dist/index.html)
 const indexOutPath = path.resolve(distDir, "index.html");
-const indexHtml = utils.createIndexPage();
+const indexHtml = utils.createIndexPage(sidebar);
 fs.writeFileSync(indexOutPath, indexHtml);
 
 const aboutPath = path.resolve(distDir, "about.html");
