@@ -29,15 +29,11 @@ a:hover {
 }
 
 pre {
-  /* background-color: #2b2b2b; */
-  /* padding: 10px; */
   border-radius: 5px;
   margin: 0.5rem 0;
-  /* overflow-x: scroll; */
 }
 
 code {
-  /* background-color: #2b2b2b;; */
   border-radius: 5px;
 }
 
@@ -732,11 +728,18 @@ span.cm-def {
 }
 
 .page-entry {
-  padding: 1rem 0;
+  cursor: pointer;
+  border-radius: 2px;
+  margin-top: 0.5rem;
+  padding: 0.2rem;
 }
 
-.page-entry h4 {
-  font-weight: semibold;
+.page-entry:hover {
+  background-color: #555;
+}
+
+.page-entry a {
+  text-decoration: none;
 }
 
 .article {
