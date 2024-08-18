@@ -51,6 +51,7 @@ const createPage = (pageHtml) => {
 };
 
 const createIndexPage = () => {
+  // FIXME: should be using dynamic sidebar
   const html = `
     <!DOCTYPE html>
     <html lang="en">
@@ -67,9 +68,9 @@ const createIndexPage = () => {
       <div class="main">  
         <div class="sidebar">
           <a href="index.html">root</a>
-          <a id="programming-link">programming</a>
-          <a id="books-link">books</a>
-          <a id="else-link">else</a>
+          <a href="programming.html">programming</a>
+          <a href="books.html">books</a>
+          <a href="else.html">else</a>
           <a href="https://github.com/jackycamp">github</a>
           <a href="about.html">about me</a>
         </div>
