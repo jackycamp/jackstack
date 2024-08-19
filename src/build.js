@@ -62,11 +62,8 @@ files.forEach((fileName) => {
   fileGroups[label].push({ name, file: htmlFileName, date });
 });
 
-console.log("File Groups", fileGroups);
-
-// TODO: build side bar with keys from FileGroups
+// build side bar with keys from FileGroups
 const links = Object.keys(fileGroups);
-console.log("dynamic links: ", links);
 const sidebar = utils.sidebar(links);
 const smallScreenNavBar = utils.smallScreenNavBar(links);
 
