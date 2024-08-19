@@ -1,9 +1,11 @@
 name:The Man in the High Castle
 date:06/15/2023
-label:books
+label:reading
 
 # The Man in the High Castle
+
 ### PKD 1962
+
 #### read june 2023 boston
 
 In a reality where the Allies lost WWII, Germany occupies much of the
@@ -12,21 +14,20 @@ occurs in San Francisco, California.
 
 In no particular order, we get to know:
 
-__Robert Childan__ a scheming and racially frustrated white businessman who owns American Artistic Handcrafts Inc.
+**Robert Childan** a scheming and racially frustrated white businessman who owns American Artistic Handcrafts Inc.
 
-__Nobusuke Tagomi__ a Japanese bureaucrat and buddhist.
+**Nobusuke Tagomi** a Japanese bureaucrat and buddhist.
 
-
-__Frank Frink__ a Jewish factory
+**Frank Frink** a Jewish factory
 worker/laborer.
 
-__Juliana Frink__ Frank's ex-wife. A judo instructor living in Colorado.
-        
-__Mr. Baynes__ disguised as a Swedish gentleman. 
+**Juliana Frink** Frank's ex-wife. A judo instructor living in Colorado.
+
+**Mr. Baynes** disguised as a Swedish gentleman.
 His true identity is Rudolph Wegener, a member of a
 German political organization wishing to halt Nazi takeover.
-                
-The barriers between reader and character blend together. 
+
+The barriers between reader and character blend together.
 Reality and truth are playthings for PKD; as
 if he wished the reader to become as mad as he was.
 
@@ -55,7 +56,7 @@ an incomprehensible reality exists where a grasshopper is heavy.
 
 But looking deeper, the phrase "The Grasshopper Lies Heavy"
 is derived from an excerpt in the bible, Ecclesiastes 12:5. From the
-King James version it reads: 
+King James version it reads:
 
 "Also when they shall be afraid of
 that which is high, and fears shall be in the way, and the almond tree
@@ -85,7 +86,6 @@ they ask it questions in search for answers and direction;
 particularly when they've met a cross-roads or non-trivial
 decision to be made. Perhaps this is a note on the laziness of
 individuals.
-
 
 Frank uses the I Ching to
 determine whether or not to begin a business venture. Mr. Tagomi
@@ -120,20 +120,17 @@ Frank Frink created this blob, poured his energy, soul, and wu into
 it, thereby releasing wu into his reality. Frank's story ends
 with him picking up where he left off: creating and perfecting.
 
-
 Perhaps that is one of the secrets.
 
 One can never be certain of their reality. One can never be in control
 of their perceived reality.
-        
-__But one can create.__
 
-        
+**But one can create.**
+
 One can control and comprehend those creations; even if it is just a
 distraction from uncertainty.
-        
 
-__Creation gives way to certainty.__
+**Creation gives way to certainty.**
 
-__Creation gives way to the comprehensible.__
-        
+**Creation gives way to the comprehensible.**
+

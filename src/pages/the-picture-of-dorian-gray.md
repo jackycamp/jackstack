@@ -1,11 +1,12 @@
 name:The Picture of Dorian Gray
 date:08/06/2023
-label:books
+label:reading
 
 # The Picture of Dorian Gray
-### Oscar Wilde
-#### read august 2023 boston
 
+### Oscar Wilde
+
+#### read august 2023 boston
 
 note: what if we all had a visual representation of our soul? what if this representation was visible for all to see?
 
@@ -16,3 +17,4 @@ note: Narcissus, in Greek Mythology.
 note: deindividuation, moral disengagement, self-serving bias
 
 note: Ring of gyges
+
