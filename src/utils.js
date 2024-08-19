@@ -33,7 +33,7 @@ const pageEntryElement = (page) => {
   const html = `
   <div class='page-entry' onclick="this.querySelector('a').click();">
     <a href="pages/${page.file}">${page.name}</a>
-    <p>${page.date}</p>
+    <p>${page.date.toDateString()}</p>
   </div>
   `;
   return html;
