@@ -717,6 +717,7 @@ span.cm-def {
 
 .content {
   padding: 0 20px;
+  flex-basis: 40%;
 }
 
 .page-entry {
@@ -732,6 +733,7 @@ span.cm-def {
 
 .page-entry a {
   text-decoration: none;
+  font-size: 14pt;
 }
 
 .article {
