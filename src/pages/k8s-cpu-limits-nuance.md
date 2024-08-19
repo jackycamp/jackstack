@@ -1,10 +1,10 @@
-name:Kubernetes CPU limit nuance
+name:Kubernetes CPU Limit Gotcha
 date:10/23/23
-label:none
+label:programming
 
-# Kubernetes CPU Limits aren't really limits
+# Kubernetes CPU Limits Gotcha
 
-### a classic case of someone skimming docs
+> This page is a work in progress
 
 When I rolled out my first kubernetes cluster it was mainly for scheduling and managing batch jobs. I heard that it was a recommended best practice to "set your resource limits and requests" for more reliable behavior.
 

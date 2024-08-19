@@ -1,4 +1,4 @@
-name:ctr cheat sheet
+name:Containerd cheat sheet
 date:08/27/2023
 label:programming
 
@@ -36,4 +36,3 @@ sudo ctr run \
 --mount type=bind,src=/path/on/host,dst=/path/in/container,options=rbind:rw \
 my-image:latest my-container /bin/bash
 ```
-
