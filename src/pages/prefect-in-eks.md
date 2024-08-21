@@ -10,8 +10,14 @@ Want to run `prefect` `flows` on your EKS cluster? Let me show you how I set thi
 
 This guide assumes you have an EKS cluster running and helm installed.
 
+## Add prefect-helm repo
+
 ## Installing prefect-server
 
 ## Resources
 
-[prefect-helm](https://github.com/PrefectHQ/prefect-helm)
+[prefect-helm repo](https://github.com/PrefectHQ/prefect-helm)
+
+[prefect-server instructions](https://github.com/PrefectHQ/prefect-helm/tree/main/charts/prefect-server)
+
+[prefect-worker instructions](https://github.com/PrefectHQ/prefect-helm/tree/main/charts/prefect-worker)
