@@ -4,12 +4,15 @@ label:programming
 
 # On Anyhow in Rust
 
-## Why anyhow might save you (and those that read your rust code) some cognitive cycles.
+I was developing a rust cli for work and noticed several of the functions seemed pretty inflated due to
+the same attempts at error handling. Usually this was around generically handling `Result<Error>` types.
 
-I noticed several of my functions comprised of the same boilerplate error handling checks;
-where I was `.unwrap_err()` on particular `Result`'s.
+In application code, it's pretty common to "attempt" a function; if it errors, propagate the
+error, otherwise, continue. This is pretty hard to do without a bunch of boilerplate.
 
-Here's a glaring example:
+Unless you use the `anyhow` crate.
+
+Consider the following function that attempts to propagate `Result<Error>` at various places.
 
 ```rust
 pub async fn from_local_cookies() -> Result<Self, Box<dyn std::error::Error>> {
@@ -46,7 +49,7 @@ pub async fn from_local_cookies() -> Result<Self, Box<dyn std::error::Error>> {
 }
 ```
 
-As you can see, this code is pretty inflated.
+As you can see, this code is pretty inflated, lots of distractions from the core logic.
 
 With `anyhow`, the code above becomes:
 
@@ -68,3 +71,5 @@ pub async fn from_local_cookies_with_anyhow() -> Result<Self> {
     Ok(Self { config, client })
 }
 ```
+
+Isn't that a thing of beauty?
