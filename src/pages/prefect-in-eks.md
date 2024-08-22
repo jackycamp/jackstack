@@ -10,9 +10,26 @@ Want to run `prefect` `flows` on your EKS cluster? Let me show you how I set thi
 
 This guide assumes you have an EKS cluster running and helm installed.
 
-## Add prefect-helm repo
+## Setup prefect-postgres secret
+
+TODO:
+
+## Setup prefect-server values.yml
+
+First let's download the values.yml file
+
+```bash
+wget https://raw.githubusercontent.com/PrefectHQ/prefect-helm/main/charts/prefect-server/values.yaml
+```
+
+TODO: show how to change the values.yml so reflect our secret
 
 ## Installing prefect-server
+
+```bash
+helm repo add prefect https://prefecthq.github.io/prefect-helm
+helm install prefect-server prefect/prefect-server -f values.yml
+```
 
 ## Resources
 
