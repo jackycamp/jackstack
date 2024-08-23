@@ -36,33 +36,49 @@ pvc's can request sizes and access modes.
 
 Consider a space station with docking bays.
 
-## Create an IAM OIDC provider for our cluster
+## Create an IAM OIDC provider for your cluster
 
-Using the AWS Management Console, navigate to your cluster in EKS and note the OpenID Connect provider URL.
-This should exist in the Details section on the Overview tab.
-
-Now, navigate to the IAM console. In the left sidebar, choose Identity Providers under Access Management.
-If your provider URL (noted earlier) appears in the list then your cluster already has a provider.
-
-To create one, click the Add provider button, and use the OpenID Connect Provider type.
-Enter the url noted earlier for the Provider URL. For audience, enter sts.amazonaws.com
-and then create!
-
-Feel free to check out the AWS guide for more info:
+You can follow the aws guide below to set this up, it's pretty straight forward.
 
 [AWS - Create an IAM OIDC provider for your cluster](https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html)
 
 ## Create an IAM role for the EBS CSI plugin
 
-If you don't already have your OIDC provider url retrieve like so:
-
-```bash
-aws eks describe-cluster --name my-cluster --query "cluster.identity.oidc.issuer" --output text
->>>https://oidc.eks.us-east-2.amazonaws.com/id/EXAMPLED539D4633E53DE1B71EXAMPLE
-```
-
-Feel free to check out the AWS guide for more info:
+Again, the aws guide is pretty easy to follow, so I just recommend walking through that:
 
 [AWS EBS CSI Step 1: Create an IAM role](https://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html#csi-iam-role)
 
-## References
+In my case, I just skipped all the stuff regarding the KMS key.
+But make sure you note the role-name used when you create this role. You'll need to specify
+it when you install the add-on later.
+
+## Install the Amazon EBS CSI Driver
+
+Now all you gotta do is install the EBS CSI driver, you can do this by using the Amazon EKS add-on.
+
+If you navigate to your cluster in EKS, and select the add-ons tab, and then press the Get more add-ons button.
+From here, select the add-on labeled: `Amazon EBS CSI Driver`. Then scroll to the bottom of that page and press Next.
+
+Regarding the IAM role, select the role with the name you created in the step above.
+
+Regarding the version, I picked the version corresponding to the version of my cluster: `v1.27.0-eksbuild.1`.
+
+Then you can click through the rest of the menus. It'll take a couple of mins to install the add-on.
+
+The docs aren't particularly helpful here, but here's the link to the guide anyway:
+
+[AWS EBS CSI Step 2: Get the Amazon EBS CSI driver](https://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html#managing-ebs-csi)
+
+## Usage
+
+Now, you should be able to specify pvc's in your manifests and EKS should take care of the rest.
+If you notice that pv's get stuck provisioning then it's likely an IAM issue...
+
+Standard kubectl commands are pretty helpful for debugging this:
+
+```bash
+# use pvcs to find out what the pv is
+kubectl get pvcs
+# then check out the status of the pv
+kubectl describe pv <my-pv>
+```
