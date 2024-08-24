@@ -1,6 +1,6 @@
 <h1 style="color: #fb97dc">jackstack</h1>
 
-### Hi, I'm Jack, and welcome to jackstack.
+## Hi, I'm Jack, and welcome to jackstack
 
 I'm a builder, technical Archmage, explorer, and software engineer.
 
