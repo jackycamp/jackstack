@@ -66,7 +66,7 @@ pub async fn from_local_cookies_with_anyhow() -> Result<Self> {
         .cookie_store(true)
         .cookie_provider(std::sync::Arc::clone(&cookies_store_arc))
         .build()?;
-    let config = PyroConfig::new();
+    let config = MyConfig::new();
 
     Ok(Self { config, client })
 }
