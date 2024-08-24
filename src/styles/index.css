@@ -737,6 +737,10 @@ span.cm-def {
   color: #fb97dc;
 }
 
+.page h2 {
+  color: #fb97dc;
+}
+
 .article {
   margin-top: 3rem;
   max-width: 40rem;
