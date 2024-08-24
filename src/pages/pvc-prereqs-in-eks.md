@@ -42,6 +42,9 @@ To summarize, when a user requests a `PVC`, Kubernetes will communicate with the
 The `CSI Driver` creates the actual storage (in this case an EBS block). Once the storage is provisioned, the `PV`
 is created and the `PVC` is bound to the `PV`. Then the pod that originally requested the `PVC` will be scheduled.
 
+In order to make this workflow viable specifically in AWS Elastic Kubernetes Service, there's a couple
+of steps you need to do. Else, you are left with an endless `PV` provisioning state.
+
 ## Create an IAM OIDC provider for your cluster
 
 You can follow the aws guide below to set this up, it's pretty straight forward.
