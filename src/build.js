@@ -25,7 +25,6 @@ fs.mkdirSync(outStylesDir);
 // generating pages, stylesheets, etc.
 const pagesDir = path.resolve(__dirname, "pages");
 const files = fs.readdirSync(pagesDir);
-
 const fileGroups = {};
 
 console.log("building pages");
@@ -41,7 +40,7 @@ files.forEach((fileName) => {
   const rawDate = metaLines.find((m) => m.startsWith("date")).split(":")[1];
   const [month, day, year] = rawDate.split("/");
   const date = new Date(year, month - 1, day);
-  console.log("date", rawDate, date);
+  console.log(name, rawDate, date);
 
   // actual content that is converted to html
   const content = lines.slice(3).join("\n");
@@ -119,13 +118,19 @@ jsFiles.forEach((fileName) => {
 });
 
 // generate entrypoint (dist/index.html)
+const indexInPath = path.resolve(__dirname, "index.md");
+const indexData = fs.readFileSync(indexInPath, "utf8");
+const indexBody = marked.parse(indexData);
 const indexOutPath = path.resolve(distDir, "index.html");
-const indexHtml = utils.createIndexPage(sidebar, smallScreenNavBar);
+const indexHtml = utils.createRootPage(indexBody, sidebar, smallScreenNavBar);
 fs.writeFileSync(indexOutPath, indexHtml);
 
-const aboutPath = path.resolve(distDir, "about.html");
-const aboutHtml = utils.createAboutPage();
-fs.writeFileSync(aboutPath, aboutHtml);
+const resumeInPath = path.resolve(__dirname, "resume.md");
+const resumeData = fs.readFileSync(resumeInPath, "utf8");
+const resumeBody = marked.parse(resumeData);
+const resumeOutPath = path.resolve(distDir, "resume.html");
+const resumePage = utils.createRootPage(resumeBody, sidebar, smallScreenNavBar);
+fs.writeFileSync(resumeOutPath, resumePage);
 
 const _404OutPath = path.resolve(distDir, "404.html");
 const _404Html = utils.get404Html();
