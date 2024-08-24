@@ -4,9 +4,13 @@ label:programming
 
 # PVC Pre-Requisites in EKS
 
-> this page is under construction
-
 ## Background
+
+In order to use PVC's in EKS, you need to go through a little bit of
+setup. These are the steps I followed to get this to work for one such
+cluster.
+
+## Terms
 
 Let's make sure we are on the same page about some terms used in this guide.
 
@@ -32,9 +36,11 @@ a PV is a Kubernetes resource. It has its own life-cycle independent of pods tha
 A request for storage by a user. Just as a pod can request specific levels of compute resources (memory, vcpus),
 pvc's can request sizes and access modes.
 
-## An analogy
+**So, how does this all fit together?**
 
-Consider a space station with docking bays.
+To summarize, when a user requests a `PVC`, Kubernetes will communicate with the `CSI Driver` to provision a new `PVC`.
+The `CSI Driver` creates the actual storage (in this case an EBS block). Once the storage is provisioned, the `PV`
+is created and the `PVC` is bound to the `PV`. Then the pod that originally requested the `PVC` will be scheduled.
 
 ## Create an IAM OIDC provider for your cluster
 
