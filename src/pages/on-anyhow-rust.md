@@ -72,4 +72,4 @@ pub async fn from_local_cookies_with_anyhow() -> Result<Self> {
 }
 ```
 
-Isn't that a thing of beauty?
+Pretty nice right?
