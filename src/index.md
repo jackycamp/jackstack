@@ -4,8 +4,8 @@
 
 I'm a builder, technical Archmage, explorer, and software engineer.
 
-Explore my corpus on all things I feel like writing about.
-Programming, systems, books, etc.
+Explore my corpus on all things I feel like writing about:
+programming, systems, books, etc.
 
 <br />
 <br />
