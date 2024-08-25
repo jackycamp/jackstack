@@ -20,7 +20,7 @@ Aug 2022 - July 2023
 
 Nov 2021 - Aug 2022
 
-I maintained a Business-Analyst data platform called Acho Studio, a one stop shop where users could
+I maintained a business-analytics data platform called Acho Studio; a one stop shop where users could
 connect with their existing data sources, transform their data, and build dashboards and visualizations
 that would ultimately be distributed either to the public or internally at their company.
 
@@ -28,6 +28,10 @@ I spearheaded support for collaboration across larger teams with the goal of inc
 I implemented full-stack logic enabling users to see where their coworkers were on the platform
 and what transformations or operations they were performing on the data. With `socket.io` at the core of this
 functionality, users could see their teammates' cursors flying across the screen in real-time! This was certainly a highly-marketable feature leading to a significant increase in engagement and DAU.
+
+TODO: infinite spreadsheet
+
+TODO: acho marketplace payment infrastructure
 
 ## PrimeLabs - Software Engineer
 
