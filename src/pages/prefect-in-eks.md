@@ -29,6 +29,8 @@ To boil it down, there will be 3 prefect pods running in our cluster:
 
 Follow my guide on that [here](http://jackstack.lol/pages/pvc-prereqs-in-eks.html)
 
+## Setup prefect-0 node group
+
 ## Setup `prefect-auth` secret
 
 ## Setup `prefect-pg-secret`
