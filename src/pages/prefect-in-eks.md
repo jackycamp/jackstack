@@ -25,6 +25,22 @@ To boil it down, there will be 3 prefect pods running in our cluster:
 2. The prefect-postgresql pod
 3. The prefect-worker pod
 
+## Install EKS CSI Driver add-on
+
+Follow my guide on that [here](http://jackstack.lol/pages/pvc-prereqs-in-eks.html)
+
+## Setup `prefect-auth` secret
+
+## Setup `prefect-pg-secret`
+
+## Setup `prefect-server-ingress`
+
+## Install `prefect-server` via helm
+
+## Setup a `default-prefect-workpool` using the prefect cli
+
+## Install `prefect-worker` via helm
+
 ## Setup prefect-postgres secret
 
 TODO:
