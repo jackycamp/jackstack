@@ -1,22 +1,14 @@
-<h1 style="color: #fb97dc">Jack</h1>
-
 ## Senior Software Engineer - Boston, MA
 
-Hello, I'm Jack Campanella.
-
-TODO: secton on tech
-
-<h2 style="color: #fb97dc">Experience</h2>
-
-## Pyrologix/Vibrant Planet - Senior Software Engineer
+### Pyrologix (Acquired by Vibrant Planet)
 
 July 2023 - Present
 
-## Pyrologix - Software Engineer
+### Pyrologix
 
 Aug 2022 - July 2023
 
-## Acho - Software Engineer
+### Acho
 
 Nov 2021 - Aug 2022
 
@@ -33,7 +25,7 @@ TODO: infinite spreadsheet
 
 TODO: acho marketplace payment infrastructure
 
-## PrimeLabs - Software Engineer
+### PrimeLabs
 
 Oct 2019 - Nov 2021
 
@@ -53,9 +45,7 @@ TODO: discuss models used
 The reporting functionality and innovative approach to compound identification was directly attributable to
 increased interest by new clients in the platform.
 
-<h2 style="color: #fb97dc">Education</h2>
-
-University of Montana - Bachelors Computer Science
+Bachelors Computer Science - University of Montana
 
 Full Academic Scholarship - Billy Merila Scholarship Program
 
