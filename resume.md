@@ -1,18 +1,41 @@
-## Senior Software Engineer - Boston, MA
+# Resume
+
+## Jack Campanella - Senior Software Engineer
+
+I am the go-to person when a hard problem needs to be solved. Like a fine-tooth
+comb, I separate and survey the layers and strands of complex systems and code-bases.
+I am the catalyst for systems that both serve users and provides business value.
+I am the eternal learner, a technical archmage, a sage of systems.
+
+Languages: Rust, Elixir, Python, Typescript.
+
+Tools: Kubernetes, AWS, React, Phoenix, Prefect, Postgres.
+
+Boston, MA
 
 ### Pyrologix (Acquired by Vibrant Planet) - Senior Software Engineer
 
 July 2023 - Present
 
-I helped grow the engineering team from 2 members to 4 members.
+I lead the 0 to 1 full-stack effort of a new SAAS product resulting in several 6-figure
+contract negotiations. This product provides various types of users (B2C and B2B) an effortless
+way to view wildfire data and risk information for an area of interest.
 
-I helped the parent company implement and test kubernetes cluster-autoscaling leading to
-an investment in their own compute platform allowing them to move away compute from
-astronomer.
+I lead the deployment of a workflow orchestration framework (prefect) on our compute platform, giving
+engineers a fast and efficient way to write and deploy pipelines while making them accessible to end-users
+when needed. This was directly attributable to an increase in pipeline development iteration speed and, dare I say,
+developer happiness.
 
-I lead the consolidation/migration of data-pipelines to a singular
+I maintained the company's compute platform as the number of users 3x'ed.
 
-TODO: I lead the development of a new product
+I helped grow the engineering team from 2 members to 6 members.
+
+I helped the parent company's engineering team implement and test kubernetes cluster-autoscaling
+resulting in an investment in their own compute platform allowing them to move away compute from
+astronomer, resulting in thousands of dollars saved monthly.
+
+I wrote a python sdk that gave users programmatic access to the company's compute platform.
+Enabling users to more efficiently create and run dozens of jobs at once.
 
 ### Pyrologix - Software Engineer
 
