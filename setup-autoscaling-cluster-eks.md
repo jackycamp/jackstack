@@ -107,8 +107,6 @@ This is just default stuff.
 ```
 
 Moving onto networking, you can leave all of these settings as the default.
-Ensure that the VPC specified is vpc-2144fa4a (which is the default for the pyrologix aws account)
-and ensure that the subnets are respective of us-east-2 a,b,c.
 
 You’ll also want to ensure that Cluster endpoint access is Public.
 
@@ -367,6 +365,288 @@ Though, they are likely to be evicted if they are resource heavy.
 It'd be funner if we setup auto-scaling node groups as well.
 
 ## Setup Cluster Auto-Scaler (CA)
+
+Companies often need to run resource intense workloads, requiring hundreds of GiB of RAM,
+terabytes of ephemeral storage, even gpu's. Such is the case for tasks processing lots of data
+or machine learning workflows.
+
+But nodes that satisfy these requirements are EXPENSIVE. Ideally, we would like to "request"
+such nodes based on our workflows, scaling from 0 to N and back to 0 with no manual effort.
+
+Luckily, a Cluster Auto-Scaler can help us out. The CA will dynamically add or remove nodes
+based on the cluster's workload.
+
+Using Kubernetes labels, we will target specific node groups for our jobs. If there are 0 nodes
+running in that node group or work cannot be scheduled on existing nodes, then the cluster should
+increase the number of nodes in that node group (scale out). Inversely, once jobs start to be completed,
+the cluster should remove any unused nodes (scale in).
+
+To start, we need to create an IAM policy. It'll allow the cluster to provision and tear down nodes
+"owned" by the cluster. Technically, you only need to attach this policy to the node that will
+be running the CA, for instance, you might only attach this policy to the node role associated with the admin node group.
+But to keep the guide simpler, we're just going to attach this policy to the node role we've already created
+and use that role for all of our node groups.
+
+Navigate to the IAM dashboard in the aws console and select Policies.
+Click Create Policy and copy this policy into the policy editor, updating the condition
+with the name of your cluster.
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "autoscaling:DescribeAutoScalingGroups",
+        "autoscaling:DescribeAutoScalingInstances",
+        "autoscaling:DescribeLaunchConfigurations",
+        "autoscaling:DescribeTags",
+        "ec2:DescribeInstanceTypes",
+        "ec2:DescribeLaunchTemplateVersions"
+      ],
+      "Resource": "*",
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "autoscaling:SetDesiredCapacity",
+        "autoscaling:TerminateInstanceInAutoScalingGroup",
+        "autoscaling:UpdateAutoScalingGroup",
+        "ec2:DescribeImages",
+        "ec2:GetInstanceTypesFromInstanceRequirements",
+        "eks:DescribeNodegroup"
+      ],
+      "Resource": "*",
+      "Effect": "Allow",
+      "Condition": {
+        "StringEquals": {
+          "autoscaling:ResourceTag/kubernetes.io/cluster/my-cluster-name": "owned"
+        }
+      }
+    }
+  ]
+}
+```
+
+Give the policy a name, something like `my-cluster-name-k8s-cluster-autoscaler-policy`,
+description, and create it.
+
+We need to attach this policy to the node role we created previously.
+
+Navigate to the IAM roles and find the node role you created.
+Click on the node role, then Add Permissions, then Attach Policies. Search for the policy name
+`my-cluster-name-k8s-cluster-autoscaler-policy` and then click Add Permissions.
+
+Once you attach the policy, you should see it appear under the Permission policies for the node role,
+after you are redirected.
+
+Now we are going to create a Deployment, ServiceAccount, and some bindings to get the CA running.
+
+The manifest we are going to use was pulled from the [Kubernetes Cluster-AutoScaler repo](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/examples/cluster-autoscaler-autodiscover.yaml).
+
+Be sure to update 'YOUR_CLUSTER_NAME_HERE' with the actual name of your cluster.
+
+```yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    k8s-addon: cluster-autoscaler.addons.k8s.io
+    k8s-app: cluster-autoscaler
+  name: cluster-autoscaler
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cluster-autoscaler
+  labels:
+    k8s-addon: cluster-autoscaler.addons.k8s.io
+    k8s-app: cluster-autoscaler
+rules:
+  - apiGroups: [""]
+    resources: ["events", "endpoints"]
+    verbs: ["create", "patch"]
+  - apiGroups: [""]
+    resources: ["pods/eviction"]
+    verbs: ["create"]
+  - apiGroups: [""]
+    resources: ["pods/status"]
+    verbs: ["update"]
+  - apiGroups: [""]
+    resources: ["endpoints"]
+    resourceNames: ["cluster-autoscaler"]
+    verbs: ["get", "update"]
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["watch", "list", "get", "update"]
+  - apiGroups: [""]
+    resources:
+      - "namespaces"
+      - "pods"
+      - "services"
+      - "replicationcontrollers"
+      - "persistentvolumeclaims"
+      - "persistentvolumes"
+    verbs: ["watch", "list", "get"]
+  - apiGroups: ["extensions"]
+    resources: ["replicasets", "daemonsets"]
+    verbs: ["watch", "list", "get"]
+  - apiGroups: ["policy"]
+    resources: ["poddisruptionbudgets"]
+    verbs: ["watch", "list"]
+  - apiGroups: ["apps"]
+    resources: ["statefulsets", "replicasets", "daemonsets"]
+    verbs: ["watch", "list", "get"]
+  - apiGroups: ["storage.k8s.io"]
+    resources:
+      ["storageclasses", "csinodes", "csidrivers", "csistoragecapacities"]
+    verbs: ["watch", "list", "get"]
+  - apiGroups: ["batch", "extensions"]
+    resources: ["jobs"]
+    verbs: ["get", "list", "watch", "patch"]
+  - apiGroups: ["coordination.k8s.io"]
+    resources: ["leases"]
+    verbs: ["create"]
+  - apiGroups: ["coordination.k8s.io"]
+    resourceNames: ["cluster-autoscaler"]
+    resources: ["leases"]
+    verbs: ["get", "update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: cluster-autoscaler
+  namespace: kube-system
+  labels:
+    k8s-addon: cluster-autoscaler.addons.k8s.io
+    k8s-app: cluster-autoscaler
+rules:
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["create", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    resourceNames:
+      ["cluster-autoscaler-status", "cluster-autoscaler-priority-expander"]
+    verbs: ["delete", "get", "update", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cluster-autoscaler
+  labels:
+    k8s-addon: cluster-autoscaler.addons.k8s.io
+    k8s-app: cluster-autoscaler
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-autoscaler
+subjects:
+  - kind: ServiceAccount
+    name: cluster-autoscaler
+    namespace: kube-system
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cluster-autoscaler
+  namespace: kube-system
+  labels:
+    k8s-addon: cluster-autoscaler.addons.k8s.io
+    k8s-app: cluster-autoscaler
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: cluster-autoscaler
+subjects:
+  - kind: ServiceAccount
+    name: cluster-autoscaler
+    namespace: kube-system
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cluster-autoscaler
+  namespace: kube-system
+  labels:
+    app: cluster-autoscaler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cluster-autoscaler
+  template:
+    metadata:
+      labels:
+        app: cluster-autoscaler
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8085"
+    spec:
+      priorityClassName: system-cluster-critical
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        fsGroup: 65534
+        seccompProfile:
+          type: RuntimeDefault
+      serviceAccountName: cluster-autoscaler
+      containers:
+        - image: registry.k8s.io/autoscaling/cluster-autoscaler:v1.26.2
+          name: cluster-autoscaler
+          resources:
+            limits:
+              cpu: 100m
+              memory: 600Mi
+            requests:
+              cpu: 100m
+              memory: 600Mi
+          command:
+            - ./cluster-autoscaler
+            - --v=4
+            - --stderrthreshold=info
+            - --cloud-provider=aws
+            - --skip-nodes-with-local-storage=false
+            - --expander=least-waste
+            - --node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/YOUR_CLUSTER_NAME_HERE
+          volumeMounts:
+            - name: ssl-certs
+              mountPath: /etc/ssl/certs/ca-certificates.crt # /etc/ssl/certs/ca-bundle.crt for Amazon Linux Worker Nodes
+              readOnly: true
+          imagePullPolicy: "Always"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+      volumes:
+        - name: ssl-certs
+          hostPath:
+            path: "/etc/ssl/certs/ca-bundle.crt"
+```
+
+**By default, this cluster auto-scaler is configured to scale-down after 10 minutes.**
+
+Update the manifest to include the name of your cluster, save it to a file, and apply it.
+
+```bash
+kubectl apply -f cluster-autoscale-autodiscover.yml
+```
+
+Good idea to check the status of the CA:
+
+```bash
+kubectl get deployments/cluster-autoscaler -n kube-system
+
+NAME                 READY   UP-TO-DATE   AVAILABLE   AGE
+cluster-autoscaler   1/1     1            1           30s
+```
 
 ## Add an Auto-Scaleable Node Group
 
