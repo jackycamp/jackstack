@@ -215,12 +215,156 @@ or coworkers need to access it. I'll show how to do this towards the end of this
 
 ## Create Node Role
 
+We are going to need an iam role that we can attach to node groups in our cluster.
+
+Navigate to the IAM roles page and click Create role.
+
+![create-node-role](assets/create-node-role.png)
+
+Choose **Custom trust policy** under **Select trusted entity** and copy the following policy into
+the editor.
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+```
+
+![node-role-trust-policy](assets/node-role-trust-policy.png)
+
+Then, add the following policies:
+
+```
+AmazonEC2ContainerRegistryReadOnly
+AmazonEKS_CNI_Policy
+AmazonEKSWorkerNodePolicy
+```
+
+If you want to add customer-defined policies you can add those here as well.
+For example, you may want to give the nodes read-only access to an s3 bucket.
+
+You can simply search for and check the policy names.
+
+![node-role-permission-policies](assets/node-role-permission-policies.png)
+
+When you're finished attaching policies, click next, give the role a name and description,
+and then click Create. Remember the node role's name as we will be attaching it to node groups
+later in this guide.
+
 ## Add a Node Group
 
 Now we are going to add a node group, which will house what I like to call our "admin"
 pods.
 
-## Test by Scheduling a Job
+Navigate to your cluster in EKS and click on the **Compute** tab. Then click on **Add node group**.
+
+![add-node-group](assets/add-node-group.png)
+
+On the configure page, name the node group: `admin-node-group` and, using the iam role we created earlier,
+assign the role under the **Node IAM role** part.
+
+![configure-node-group](assets/configure-node-group.png)
+
+You don’t need to add any Kubernetes labels or taints to this node group so once you’ve filled the name and the role, click Next.
+
+In the compute configuration, follow this spec:
+
+```
+AMI type: Amazon Linux 2 Arm
+Capacity type: On-Demand
+Instance type: t4g.large
+Disk size: 20GiB
+```
+
+![node-group-compute](assets/node-group-compute.png)
+
+For the scaling config, follow this spec:
+
+```
+Desired size: 1
+Minimum size: 1
+Maximum size: 2
+```
+
+![node-group-scaling](assets/node-group-scaling.png)
+
+You can keep the defaults for the "Update configuration". Click Next.
+
+For the network config, if you want to allow remote access to nodes, you can set that up here.
+Just choose the proper ec2 key pair and security groups. You can also generate these pretty easily
+to add your IP to the allowlist.
+
+![node-group-networking](assets/node-group-networking.png)
+
+Click next when you're finished. The node group will be in a creating state for a few minutes.
+
+Once it's done creating, we should see some nodes in our cluster:
+
+```bash
+kubectl get nodes
+
+NAME                                            STATUS    ROLES    AGE    VERSION
+ip-172-31-18-97.us-east-2.compute.internal      Ready     <none>   3m29s  v1.27.5-eks-43840fb
+```
+
+Now take this yml and stick it in a file called: `hello-world-job.yml`.
+
+```json
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hello-world-job
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: hello-world
+        image: hello-world
+```
+
+Then, let's run our job:
+
+```bash
+kubectl apply -f hello-world-job.yml
+```
+
+Then let's check on our job:
+
+```bash
+kubectl get jobs
+
+NAME              COMPLETIONS   DURATION    AGE
+hello-world-job   0/1           3s          3s
+```
+
+If you're feeling excited, you can check the logs and detailed status of the job.
+
+```bash
+kubectl logs jobs/hello-world-job
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+...
+
+
+kubectl describe job hello-world-job
+```
+
+Congrats on attaching some nodes to your cluster. In theory, you could attempt
+to schedule some of your containerized workflows/scripts/apps with this setup.
+Though, they are likely to be evicted if they are resource heavy.
+
+It'd be funner if we setup auto-scaling node groups as well.
 
 ## Setup Cluster Auto-Scaler (CA)
 
