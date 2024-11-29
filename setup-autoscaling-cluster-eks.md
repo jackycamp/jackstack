@@ -1,6 +1,6 @@
 # How to setup an auto-scaling cluster in Elastic Kubernetes Service
 
-I've used this guide to scaffold three auto-scaling clusters in AWS EKS.
+I've reliably used this guide to scaffold three auto-scaling clusters in AWS EKS.
 For the most part, this guide uses the AWS console to setup everything, which has its trade-offs.
 
 This guide assumes that you have kubectl and aws-cli-v2 installed on your machine.
@@ -168,6 +168,50 @@ That's it, you successfully created a Kubernetes cluster in EKS. Here's a ⭐
 But, we've only just begun...
 
 ## Access the Cluster Locally
+
+Now we can add the cluster to our local kubeconfig. In your terminal run:
+
+```bash
+aws eks update-kubeconfig --region us-east-2 --name my-cluster-name
+```
+
+Don't worry if you don't have a kubeconfig, this command will create one for you.
+This command will automatically switch to the cluster's context.
+
+Let's just double check that the cluster was added and that our current context
+points to it:
+
+```bash
+kubectl config get-contexts
+
+CURRENT NAME   AUTHINFO       CLUSTER           NAMESPACE
+*       arn:aws:eks:us-east-2:598028:cluster/my-cluster-name arn:aws:eks:us-east-2:598028:cluster/my-cluster-name ...
+```
+
+Also, verify the cluster-info command:
+
+```bash
+kubectl cluster-info
+
+Kubernetes control plane is running at https://4839483928490.gr7.us-east-2.eks.amazonaws.com
+CoreDNS is running at https://4839483928490.gr7.us-east-2.eks.amazonaws.com/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluste problems, use 'kubectl cluster-info dump'.
+```
+
+If you see an error like:
+
+```bash
+error: exec plugin: invalid apiVersion "client.authentication.k8s.io/v1alpha1"
+```
+
+You probably have an old version of the aws cli installed or perhaps an incompatible
+kube client. I recommend [upgrading to awscliv2](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html).
+
+By default, the user or role that created the cluster is the only IAM entity that
+has access. Kubernetes has its own permission model, so you need to add additional
+users/roles manually. Not necessary to do now, but will be once your teammates
+or coworkers need to access it. I'll show how to do this towards the end of this guide.
 
 ## Create Node Role
 
