@@ -1,14 +1,13 @@
-# How to setup an auto-scaling cluster in Elastic Kubernetes Service
+_Disclaimer 0: this guide was migrated from my old blog._
 
-> This guide was migrated from my old blog.
+_Disclaimer 1: some of the screenshots/code-snippets have been edited to remove aws account identifying info._
 
-I've used this guide to build three production-grade auto-scaling clusters in AWS EKS.
+_Disclaimer 2: for the most part, this guide uses the aws console to setup the cluster, which is, admittedly, a little annoying._
+
+I've used this guide to build three production-grade auto-scaling clusters in aws's Elastic Kubernetes Service (eks).
 These clusters can scale to hundreds of nodes and thousands of pods running at a time
 in a matter of minutes. I've found that this setup lends itself nicely to
-heavy data-processing and machine learning workflows. Which most companies tend to do
-these days.
-
-For the most part, this guide uses the AWS console to setup everything, which has its trade-offs.
+heavy data-processing and machine learning workflows.
 
 This guide assumes that you have kubectl and aws-cli-v2 installed on your machine.
 
@@ -16,7 +15,7 @@ This guide assumes that you have kubectl and aws-cli-v2 installed on your machin
 
 Navigate to the EKS Clusters page and click Add cluster -> Create.
 
-![create-cluster](assets/create-cluster.png)
+![create-cluster](https://bear-images.sfo2.cdn.digitaloceanspaces.com/jackstack/create-cluster.webp)
 
 On the next page, give your cluster a name, select a kubernetes version (I used 1.27), and
 select the Cluster Service Role.
@@ -26,7 +25,7 @@ linked guide, but TLDR; just create an IAM role and attach the policy: `AmazonEK
 This should be the only policy needed. The json below the screenshot includes what that policy looks like.
 This is just default stuff.
 
-![configure-cluster](assets/configure-cluster.png)
+![configure-cluster](https://bear-images.sfo2.cdn.digitaloceanspaces.com/jackstack/configure-cluster.webp)
 
 ```json
 {
@@ -118,38 +117,36 @@ Moving onto networking, you can leave all of these settings as the default.
 You’ll also want to ensure that Cluster endpoint access is Public.
 
 You don't need to worry about the Security Groups field, aws will generate one
-automatically and we will mess with it later.
+automatically and if needed, you can mess with it later.
 
-![cluster-networking](assets/cluster-networking.png)
+![cluster-networking](https://bear-images.sfo2.cdn.digitaloceanspaces.com/jackstack/cluster-networking.webp)
 
 Next, configure logging. I want all the logs.
 
-![config-cluster-logging](assets/config-cluster-logging.png)
+![config-cluster-logging](https://bear-images.sfo2.cdn.digitaloceanspaces.com/jackstack/config-cluster-logging.webp)
 
 Select add-ons, should look like this:
 
-![choose-cluster-addons](assets/choose-cluster-addons.png)
+![choose-cluster-addons](https://bear-images.sfo2.cdn.digitaloceanspaces.com/jackstack/choose-cluster-addons.webp)
 
 You can leave the defaults for the add-ons.
 
-![config-cluster-addons](assets/config-cluster-addons.png)
+![config-cluster-addons](https://bear-images.sfo2.cdn.digitaloceanspaces.com/jackstack/config-cluster-addons.webp)
 
 After reviewing, click create!
 
-![review-cluster-create](assets/review-cluster-create.png)
+![review-cluster-create](https://bear-images.sfo2.cdn.digitaloceanspaces.com/jackstack/review-cluster-create.webp)
 
 The cluster will be in a Creating state for several minutes.
 But once the Cluster security group becomes available, click on the security group link.
 It will bring you to the Security Groups page.
 
-![after-cluster-create](assets/after-cluster-create.png)
+![after-cluster-create](https://bear-images.sfo2.cdn.digitaloceanspaces.com/jackstack/after-cluster-create.webp)
 
 The name for this security group is auto-generated and the first inbound/outbound rules are auto-generated.
 If you want, you can whitelist IP’s here so that those IP’s can ssh into the nodes.
 
-Even if the node groups' launch templates have remote access configured,
-you still need to whitelist IP’s for the cluster’s security group otherwise
-you won’t be able to connect (or ssh into the nodes).
+If you plan on using launch templates for your nodes and the launch template has remote access configured, you still need to whitelist IP's in the cluster's security group to connect remotely to nodes.
 
 Open up a terminal, and let's check that you can see the cluster.
 
@@ -169,8 +166,9 @@ jack@Jacks-MBP-2 ~ % aws eks list-clusters
 }
 ```
 
-That's it, you successfully created a Kubernetes cluster in EKS. Here's a ⭐
-But, we've only just begun...
+That's it, you successfully created a Kubernetes cluster in EKS.
+
+You've leveled up ⭐. But, we've only just begun...
 
 ## Access the Cluster Locally
 
@@ -216,7 +214,7 @@ kube client. I recommend [upgrading to awscliv2](https://docs.aws.amazon.com/cli
 By default, the user or role that created the cluster is the only IAM entity that
 has access. Kubernetes has its own permission model, so you need to add additional
 users/roles manually. Not necessary to do now, but will be once your teammates
-or coworkers need to access it. I'll show how to do this towards the end of this guide.
+or coworkers need to access it. I'll show how to do this towards the [end of this guide](#setup-aws-auth-config-map).
 
 ## Create Node Role
 
@@ -224,7 +222,7 @@ We are going to need an iam role that we can attach to node groups in our cluste
 
 Navigate to the IAM roles page and click Create role.
 
-![create-node-role](assets/create-node-role.png)
+![create-node-role](https://bear-images.sfo2.cdn.digitaloceanspaces.com/jackstack/create-node-role.webp)
 
 Choose **Custom trust policy** under **Select trusted entity** and copy the following policy into
 the editor.
@@ -244,7 +242,7 @@ the editor.
 }
 ```
 
-![node-role-trust-policy](assets/node-role-trust-policy.png)
+![node-role-trust-policy](https://bear-images.sfo2.cdn.digitaloceanspaces.com/jackstack/node-role-trust-policy.webp)
 
 Then, add the following policies:
 
@@ -259,7 +257,7 @@ For example, you may want to give the nodes read-only access to an s3 bucket.
 
 You can simply search for and check the policy names.
 
-![node-role-permission-policies](assets/node-role-permission-policies.png)
+![node-role-permission-policies](https://bear-images.sfo2.cdn.digitaloceanspaces.com/jackstack/node-role-permission-policies.webp)
 
 When you're finished attaching policies, click next, give the role a name and description,
 and then click Create. Remember the node role's name as we will be attaching it to node groups
@@ -272,12 +270,12 @@ pods.
 
 Navigate to your cluster in EKS and click on the **Compute** tab. Then click on **Add node group**.
 
-![add-node-group](assets/add-node-group.png)
+![add-node-group](https://bear-images.sfo2.cdn.digitaloceanspaces.com/jackstack/add-node-group.webp)
 
 On the configure page, name the node group: `admin-node-group` and, using the iam role we created earlier,
 assign the role under the **Node IAM role** part.
 
-![configure-node-group](assets/configure-node-group.png)
+![configure-node-group](https://bear-images.sfo2.cdn.digitaloceanspaces.com/jackstack/configure-node-group.webp)
 
 You don’t need to add any Kubernetes labels or taints to this node group so once you’ve filled the name and the role, click Next.
 
@@ -290,7 +288,7 @@ Instance type: t4g.large
 Disk size: 20GiB
 ```
 
-![node-group-compute](assets/node-group-compute.png)
+![node-group-compute](https://bear-images.sfo2.cdn.digitaloceanspaces.com/jackstack/node-group-compute.webp)
 
 For the scaling config, follow this spec:
 
@@ -300,7 +298,7 @@ Minimum size: 1
 Maximum size: 2
 ```
 
-![node-group-scaling](assets/node-group-scaling.png)
+![node-group-scaling](https://bear-images.sfo2.cdn.digitaloceanspaces.com/jackstack/node-group-scaling-1.webp)
 
 You can keep the defaults for the "Update configuration". Click Next.
 
@@ -308,7 +306,7 @@ For the network config, if you want to allow remote access to nodes, you can set
 Just choose the proper ec2 key pair and security groups. You can also generate these pretty easily
 to add your IP to the allowlist.
 
-![node-group-networking](assets/node-group-networking.png)
+![node-group-networking](https://bear-images.sfo2.cdn.digitaloceanspaces.com/jackstack/node-group-networking.webp)
 
 Click next when you're finished. The node group will be in a creating state for a few minutes.
 
@@ -323,7 +321,7 @@ ip-172-31-18-97.us-east-2.compute.internal      Ready     <none>   3m29s  v1.27.
 
 Now take this yml and stick it in a file called: `hello-world-job.yml`.
 
-```json
+```yaml
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -333,8 +331,8 @@ spec:
     spec:
       restartPolicy: Never
       containers:
-      - name: hello-world
-        image: hello-world
+        - name: hello-world
+          image: hello-world
 ```
 
 Then, let's run our job:
@@ -377,8 +375,6 @@ Congrats on attaching some nodes to your cluster. In theory, you could attempt
 to schedule some of your containerized workflows/scripts/apps with this setup.
 Though, they are likely to be evicted if they are resource heavy.
 
-It'd be funner if we setup auto-scaling node groups as well.
-
 ## Setup Cluster Auto-Scaler (CA)
 
 Companies often need to run resource intense workloads, requiring hundreds of GiB of RAM,
@@ -388,7 +384,7 @@ or machine learning workflows.
 But nodes that satisfy these requirements are EXPENSIVE. Ideally, we would like to "request"
 such nodes based on our workflows, scaling from 0 to N and back to 0 with no manual effort.
 
-Luckily, a Cluster Auto-Scaler can help us out. The CA will dynamically add or remove nodes
+Luckily, the Kubernetes Cluster Auto-Scaler can help us out. The CA will dynamically add or remove nodes
 based on the cluster's workload.
 
 Using Kubernetes labels, we will target specific node groups for our jobs. If there are 0 nodes
@@ -563,7 +559,6 @@ subjects:
   - kind: ServiceAccount
     name: cluster-autoscaler
     namespace: kube-system
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -581,7 +576,6 @@ subjects:
   - kind: ServiceAccount
     name: cluster-autoscaler
     namespace: kube-system
-
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -683,7 +677,7 @@ Add the following label:
 compute: my-node-group
 ```
 
-![node-group-labels](assets/node-group-labels.png)
+![node-group-labels](https://bear-images.sfo2.cdn.digitaloceanspaces.com/jackstack/node-group-labels.webp)
 
 Technically, it doesn't have to be these labels exactly. Just any sensible key-value pair.
 Just remember whatever key value pair you choose as we'll need it when tagging auto-scaling groups.
@@ -703,7 +697,7 @@ Disk Size: 20 GiB
 In the scaling config, set Desired size to 0 and Minimum size to 0.
 We also choose an arbitrary Maximum Node Size of 50. But this should be tuned based on your requirements.
 
-![node-group-scaling](assets/node-group-scaling-ca.png)
+![node-group-scaling](https://bear-images.sfo2.cdn.digitaloceanspaces.com/jackstack/node-group-scaling-ca.webp)
 
 Click next after setting the scaling config, then next again in networking keeping defaults,
 then review, then CREATE.
@@ -711,7 +705,7 @@ then review, then CREATE.
 After you create the node group, an Autoscaling group will be pending creation.
 Once the Autoscaling group is created, click on the name.
 
-![node-group-after-create](assets/node-group-after-create.png)
+![node-group-after-create](https://bear-images.sfo2.cdn.digitaloceanspaces.com/jackstack/node-group-after-create.webp)
 
 When you get to the page for the ASG, scroll down to the tags section.
 
@@ -751,8 +745,8 @@ but for our case, we are mostly focused on batch jobs (data-processing and ml tr
 
 We don't really care where they run as long as they run as soon as possible.
 
-If you don't suspend AZ rebalancing you may notice that some in-use nodes are "evicted" without much trace of why
-specifically when the cluster auto-scaler has terminated nodes that were no longer needed.
+If you don't suspend AZ rebalancing you may notice that some in-use nodes are "evicted" without much trace of why,
+specifically, when the cluster autoscaler has terminated nodes that were no longer needed.
 
 Use this command to suspend AZ rebalancing
 
@@ -795,7 +789,7 @@ Copy the yml below, save it to `hello-autoscaling.yml` and notice
 the `nodeSelector` part. We are specifically targeting the node group we
 created previously in this guide.
 
-```json
+```yaml
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -807,8 +801,8 @@ spec:
         compute: my-node-group
       restartPolicy: Never
       containers:
-      - name: hello-autoscaling
-        image: hello-world
+        - name: hello-autoscaling
+          image: hello-world
 ```
 
 Apply it with `kubectl apply -f hello-autoscaling.yml`.
@@ -874,11 +868,13 @@ the pod.
 the cluster-autoscaler will mark that node as un-scheduleable and it will be removed
 from the cluster, assuming no other jobs are scheduled on it before that 10 minute window.
 
-## Setup aws-auth Config Map (optional)
+## Setup aws-auth Config Map
+
+This is an optional step.
 
 When you create a cluster in EKS, only your IAM user/role has access to the cluster.
 This can be a problem if your teammates also need access to the cluster. This is because,
-at the time of writing, kubernetes maintains its own permissions model. Even if your teammates
+at the time of writing, kubernetes maintains its own permissions model, independent of aws. Even if your teammates
 have 'god-mode' access in aws, you will still need to give them explicit access to the cluster via
 a kubernetes ConfigMap.
 
