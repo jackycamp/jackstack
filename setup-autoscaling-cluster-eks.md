@@ -1,6 +1,13 @@
 # How to setup an auto-scaling cluster in Elastic Kubernetes Service
 
-I've reliably used this guide to scaffold three auto-scaling clusters in AWS EKS.
+> This guide was migrated from my old blog.
+
+I've used this guide to build three production-grade auto-scaling clusters in AWS EKS.
+These clusters can scale to hundreds of nodes and thousands of pods running at a time
+in a matter of minutes. I've found that this setup lends itself nicely to
+heavy data-processing and machine learning workflows. Which most companies tend to do
+these days.
+
 For the most part, this guide uses the AWS console to setup everything, which has its trade-offs.
 
 This guide assumes that you have kubectl and aws-cli-v2 installed on your machine.
@@ -352,8 +359,16 @@ kubectl logs jobs/hello-world-job
 
 Hello from Docker!
 This message shows that your installation appears to be working correctly.
-...
 
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+...
 
 kubectl describe job hello-world-job
 ```
@@ -772,12 +787,183 @@ Nice, now the node group is in a much more reliable spot.
 
 ## Schedule a Job and Watch Cluster Auto-Scaler Go BRRRRR
 
-todo
+Now it is time to scale up!!
+
+At present, there should be 0 nodes in the node group: "my-node-group".
+
+Copy the yml below, save it to `hello-autoscaling.yml` and notice
+the `nodeSelector` part. We are specifically targeting the node group we
+created previously in this guide.
+
+```json
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hello-autoscaling
+spec:
+  template:
+    spec:
+      nodeSelector:
+        compute: my-node-group
+      restartPolicy: Never
+      containers:
+      - name: hello-autoscaling
+        image: hello-world
+```
+
+Apply it with `kubectl apply -f hello-autoscaling.yml`.
+
+Then describe the job and find the pod that was created
+
+```bash
+kubectl describe job hello-autoscaling
+
+...
+
+Pods Statuses:    1 Active (0 Ready) / 0 Succeeded / 0 Failed
+Pod Template:
+  Labels:  batch.kubernetes.io/controller-uid=637e3272-6ede-44f2-80f1-753f4cd4f874
+           batch.kubernetes.io/job-name=hello-autoscaling
+           controller-uid=637e3272-6ede-44f2-80f1-753f4cd4f874
+           job-name=hello-autoscaling
+  Containers:
+   hello-autoscaling:
+    Image:        hello-world
+    Port:         <none>
+    Host Port:    <none>
+    Environment:  <none>
+    Mounts:       <none>
+  Volumes:        <none>
+Events:
+  Type    Reason            Age   From            Message
+  ----    ------            ----  ----            -------
+  Normal  SuccessfulCreate  17s   job-controller  Created pod: hello-autoscaling-z9t9j
+```
+
+Then describe the pod
+
+```bash
+kubectl describe pod hello-autoscaling-z9t9j
+
+...
+
+QoS Class:                   BestEffort
+Node-Selectors:              compute=my-node-group
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason            Age   From                Message
+  ----     ------            ----  ----                -------
+  Warning  FailedScheduling  91s   default-scheduler   0/5 nodes are available: 5 node(s) didn't match Pod's node affinity/selector. preemption: 0/5 nodes are available: 5 Preemption is not helpful for scheduling..
+  Normal   TriggeredScaleUp  88s   cluster-autoscaler  pod triggered scale-up: [{eks-my-node-group-ecc5b3d1-f911-10e7-508d-0f2a93f8606c 0->1 (max: 50)}]
+  Normal   Scheduled         49s   default-scheduler   Successfully assigned default/hello-autoscaling-z9t9j to ip-172-31-12-39.us-east-2.compute.internal
+  Normal   Pulling           48s   kubelet             Pulling image "hello-world"
+  Normal   Pulled            48s   kubelet             Successfully pulled image "hello-world" in 642.257205ms (642.278334ms including waiting)
+  Normal   Created           48s   kubelet             Created container hello-autoscaling
+  Normal   Started           48s   kubelet             Started container hello-autoscaling
+```
+
+Look at that! The cluster-autoscaler is doing its job!.
+
+This is a common event pattern during scale up events. First, a `FailedScheduling` event
+will occur since the scheduler cannot find any suitable nodes to schedule the pod on.
+Then the cluster-autoscaler triggers a scale up allowing the scheduler to schedule
+the pod.
+
+10 minutes after the pod `hello-autoscaling-z9t9j` enters a completed state
+the cluster-autoscaler will mark that node as un-scheduleable and it will be removed
+from the cluster, assuming no other jobs are scheduled on it before that 10 minute window.
 
 ## Setup aws-auth Config Map (optional)
 
-todo
+When you create a cluster in EKS, only your IAM user/role has access to the cluster.
+This can be a problem if your teammates also need access to the cluster. This is because,
+at the time of writing, kubernetes maintains its own permissions model. Even if your teammates
+have 'god-mode' access in aws, you will still need to give them explicit access to the cluster via
+a kubernetes ConfigMap.
+
+First, make sure you have the userarn and username for the account you want to give access to.
+
+```bash
+userarn: arn:aws:iam:438902:user/myteammate
+username: myteammate
+```
+
+Then pull the current aws-auth config map
+
+```bash
+kubectl get configmap aws-auth -n kube-system -o yaml > aws-auth-latest.yml
+```
+
+Open the config map aws-auth-latest.yml and it will look like:
+
+```yml
+apiVersion: v1
+data:
+  mapRoles: |
+    - groups:
+      - system:bootstrappers
+      - system:nodes
+      rolearn: arn:aws:iam::438902:role/AmazonEKSNodeRole
+      username: system:node:{{EC2PrivateDNSName}}
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"mapRoles":"- groups:\n ... "}}
+  creationTimestamp: "2023-07-13T17:50:15Z"
+  name: aws-auth
+  namespace: kube-system
+  resourceVersion: "89144844"
+  uid: e9622ceb-be09-452a-9d2a-b98d71b75af9
+```
+
+Not much going on yet, but we can easily add a user to the map. Under data, add a `mapUsers`
+key and add your teammate as an entry.
+
+In this example we are adding the user to the system:masters group which basically
+gives god-mode access to our cluster. Make sure you only give your teammate
+the permissions they really need.
+
+```yml
+apiVersion: v1
+data:
+  mapRoles: |
+    - groups:
+      - system:bootstrappers
+      - system:nodes
+      rolearn: arn:aws:iam::438902:role/AmazonEKSNodeRole
+      username: system:node:{{EC2PrivateDNSName}}
+  mapUsers: |
+    - userarn: arn:aws:iam:438902:user/myteammate
+      username: myteammate
+      groups:
+        - system:masters
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"mapRoles":"- groups:\n ... "}}
+  creationTimestamp: "2023-07-13T17:50:15Z"
+  name: aws-auth
+  namespace: kube-system
+  resourceVersion: "89144844"
+  uid: e9622ceb-be09-452a-9d2a-b98d71b75af9
+```
+
+Apply this manifest to give your teammate access.
+
+```bash
+kubectl apply -f aws-auth-latest.yml
+```
 
 ## Conclusion
 
-todo
+This is a pretty simple setup of an autoscaling eks cluster -- it can support
+about 100 nodes per node group, anymore than that and you will likely see some performance
+issues with the cluster-autoscaler. If your needs go beyond this you may want to consider having an autoscaler per node group.
+
+Other than that, I'd recommend making observability a priority, and install prometheus/grafana.
+
+Congrats on making it to the end of this guide. I'm proud of you.
+Here's some stars: ⭐ ⭐ ⭐
