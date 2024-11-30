@@ -650,7 +650,125 @@ cluster-autoscaler   1/1     1            1           30s
 
 ## Add an Auto-Scaleable Node Group
 
+Time to create a node group that can scale from 0 to N back to 0.
+
+We've already created our admin-node-group, this process will look pretty similar, but
+we'll be adding some Kubernetes Labels and tagging the node group's auto scaling group.
+
+Navigate to your cluster in eks via the aws console. Click **Add node group**.
+
+Give the node group a name and use the node role we created earlier in this guide.
+In a production setting you will likely want a node role dedicated to worker/data processing nodes.
+
+You can keep the rest of the settings the same, scroll down to the Kubernetes Labels section.
+
+Add the following label:
+
+```bash
+compute: my-node-group
+```
+
+![node-group-labels](assets/node-group-labels.png)
+
+Technically, it doesn't have to be these labels exactly. Just any sensible key-value pair.
+Just remember whatever key value pair you choose as we'll need it when tagging auto-scaling groups.
+
+Click next.
+
+In the compute configuration section, you can follow this spec, although, you should
+select the instance type based on your task's requirements.
+
+```yaml
+AMI type: Amazon Linux 2
+Capacity type: On-Demand
+Instance types: c5d.9xlarge
+Disk Size: 20 GiB
+```
+
+In the scaling config, set Desired size to 0 and Minimum size to 0.
+We also choose an arbitrary Maximum Node Size of 50. But this should be tuned based on your requirements.
+
+![node-group-scaling](assets/node-group-scaling-ca.png)
+
+Click next after setting the scaling config, then next again in networking keeping defaults,
+then review, then CREATE.
+
+After you create the node group, an Autoscaling group will be pending creation.
+Once the Autoscaling group is created, click on the name.
+
+![node-group-after-create](assets/node-group-after-create.png)
+
+When you get to the page for the ASG, scroll down to the tags section.
+
+Since we have a cluster autoscaler already setup in our cluster, aws automatically adds some tags to this ASG so that the CA can make informed decisions
+during scale-related events.
+
+**BUT!!** There are some tags missing…
+
+Since we use Kubernetes labels to target node groups, the ASG for said node group must have respective tags of those labels.
+
+Since we only defined 1 Kubernetes label when we were setting up our node group we only have to add 1 additional tag.
+But if you add N Kubernetes labels then you would need to add N tags to the corresponding ASG.
+
+Go ahead and click the **Edit** button and then **Add Tag.**
+
+We are going to add a new key-value pair that takes the following form:
+
+```bash
+Key: k8s.io/cluster-autoscaler/node-template/label/<KEY_OF_K8S_LABEL>
+Value: <VALUE_OF_K8S_LABEL>
+```
+
+Which in our case we will add:
+
+```bash
+Key: k8s.io/cluster-autoscaler/node-template/label/compute
+Value: my-node-group
+```
+
+Nice, now that we have our auto-scaling node group set up. We can really see our cluster come to life.
+
 ## Suspend Availability Zone Re-Balancing (optional)
+
+By default, Autoscaling Groups in AWS are setup with multiple availabilty zones. And thus, by default, during scale down events, the ASG may
+terminate nodes in that node group in order to keep the availability zones "in balanace". This may make sense for some application workflows
+but for our case, we are mostly focused on batch jobs (data-processing and ml training).
+
+We don't really care where they run as long as they run as soon as possible.
+
+If you don't suspend AZ rebalancing you may notice that some in-use nodes are "evicted" without much trace of why
+specifically when the cluster auto-scaler has terminated nodes that were no longer needed.
+
+Use this command to suspend AZ rebalancing
+
+```bash
+aws autoscaling suspend-processes \
+--auto-scaling-group-name <YOUR_ASG_NAME> \
+--scaling-processes AZRebalance
+
+# for example
+aws autoscaling suspend-processes \
+--auto-scaling-group-name my-node-group \
+--scaling-processes AZRebalance
+```
+
+To verify that it has been suspended you can try:
+
+```bash
+aws autoscaling describe-auto-scaling-groups \
+--auto-scaling-group-names <YOUR_ASG_NAME> \
+--query "AutoScalingGroups[*].{Name:AutoScalingGroupName, SuspendedProcesses:SuspendedProcesses}"
+```
+
+And if you want to check the availability zones for your node group:
+
+```bash
+aws autoscaling describe-auto-scaling-groups \
+--auto-scaling-group-names <YOUR_ASG_NAME> \
+--query "AutoScalingGroups[*].[AutoScalingGroupName, AvailabilityZones]"
+```
+
+Nice, now the node group is in a much more reliable spot.
 
 ## Schedule a Job and Watch Cluster Auto-Scaler Go BRRRRR
 
