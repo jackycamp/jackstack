@@ -1,7 +1,15 @@
-how we interact with devices/apps/computers is cumbersome and unnatural.
+statement: how we interact with devices/apps/computers is cumbersome and unnatural.
 especially mobile computing.
 
-and how apple intelligence doesn't help either
+aux statement: and how apple intelligence doesn't help either
+
+The more I think about it, the more I realize how cumbersome and slow it feels interacting
+with applications and computers -- especially mobile computing.
+
+I've somewhat optimized my desktop computer usage experience through a primarily keyboard based approach (vim, alt-tabbing, single-monitor, etc.),
+trying to stay away from apps or things that make you "point and click". But I'm not always at my desktop.
+
+Humans tend to have other obligations, like putting dishes in the dishwasher, storing groceries when you get back from the store,
 
 when you're on the go or in the middle of doing something that is when
 your mobile device should be the MOST useful. But when you look at it objectively,
