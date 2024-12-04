@@ -21,6 +21,8 @@ got access to it, what a dud...
 
 at the time of writing, apple int can barely add reminders, show your schedule, sometimes open apps, and... that's it.
 
+I envision saying "Go to bear blog, list the most recent posts." Followed up with "Oh! Read that one to me."
+
 Requests it should satisfy:
 "Add 20g of protein to my consumption for today"
 
