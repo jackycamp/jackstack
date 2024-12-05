@@ -31,6 +31,11 @@ at the time of writing, apple int can barely add reminders, show your schedule, 
 
 I envision saying "Go to bear blog, list the most recent posts." Followed up with "Oh! Read that one to me."
 
+I envision scrolling through some article or document, encountering an unfamiliar word or phrase that needs clarifying
+and saying "Can you explain this to me?"
+
+I know a lot of these fantasies are limited to capabilities in ios.
+
 Requests it should satisfy:
 "Add 20g of protein to my consumption for today"
 
