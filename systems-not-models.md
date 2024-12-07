@@ -1,14 +1,15 @@
 inspired by: https://www.youtube.com/watch?v=vRTcE19M-KE
 
 It feels like most marketing coming out of "ai" research entities is heavily
-"model" focused. [^1]
+"model" focused [^1]. All of these posts seem to be touting "Our most capable model yet!",
+"Many parameters, wow! More numbers wow!", "Benchmarks that we probably included in the test set but didn't know it wow!".
 
-There's a ton of marketing out there regarding model params,
-how big the context window is, etc.
+Don't mistake me, Reader, I do not intend to undermine the effort and complexity involved in creating these models.
+I understand that "quantifiable" metrics can produce engaging headlines. And best to play it safe and just talk about
+the model. But model talk has quickly become... tired.
 
-It's interesting that this is the focus because it's actually only a single component
-of the entire system that users interact with. Frankly, it's an oversimplification, and
-I get it...
+The model is but a single component users interact with. By itself, the llm really does one thing, generate.
+Which is not valuable alone.
 
 Perhaps most people simply won't engage with other technical metrics regarding the system like:
 
