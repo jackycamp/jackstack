@@ -21,9 +21,9 @@ But I'd be happy as peaches to read about that! Cool as heck!
 Admittedly though, this would be giving away quite a bit of information and "tricks". But the thing is,
 these kinds of complex systems take a long time to build.
 
-Which brings me to the main point, the underlying model itself is not the company's moat --
+Which brings me to the main point, the underlying model itself is not the company's moat,
 the arrangement, the deployment, the streaming -- the entire software system is.
 
-[^1]: TODO: insert links to new model releases here
+[^1]: [o1 preview](tab:https://openai.com/index/introducing-openai-o1-preview/), [llama 3](tab:https://ai.meta.com/blog/meta-llama-3/), [Amazon Nova](tab:https://aws.amazon.com/blogs/aws/introducing-amazon-nova-frontier-intelligence-and-industry-leading-price-performance/), and countless others.
 
 [^2]: LiveKit basically did this on [Hacker News](https://news.ycombinator.com/item?id=41743327) which was pretty cool. It would also be cool if openai discussed this in more detail in the context of their systems.
