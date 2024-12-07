@@ -9,7 +9,8 @@ I understand that "quantifiable" metrics can produce engaging headlines. And bes
 the model. But model talk has quickly become... tired.
 
 The model is but a single component users interact with. By itself, the llm really does one thing, generate.
-Which is not valuable alone.
+Which is not valuable alone. Consider practically any non-technical use case for a generative model. Only a software
+system can satisfy that use-case. What is the average person going to do with model weights?
 
 Perhaps most people simply won't engage with other technical metrics regarding the system like:
 
@@ -19,8 +20,7 @@ Perhaps most people simply won't engage with other technical metrics regarding t
 
 But I'd be happy as peaches to read about that! Cool as heck!
 
-Admittedly though, this would be giving away quite a bit of information and "tricks". But the thing is,
-these kinds of complex systems take a long time to build.
+Admittedly though, this would be giving away quite a bit of information.
 
 Which brings me to the main point, the underlying model itself is not the company's moat,
 the arrangement, the deployment, the streaming -- the entire software system is.
