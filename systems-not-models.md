@@ -1,5 +1,3 @@
-inspired by: https://www.youtube.com/watch?v=vRTcE19M-KE
-
 Most marketing coming out of "ai" research entities is heavily
 "model" focused [^1]. All of these posts seem to be touting "Our most capable model yet!",
 "Many parameters! More numbers wow!", "Benchmarks that we probably included in the test set but didn't know it wow!".
