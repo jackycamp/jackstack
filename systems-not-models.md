@@ -1,30 +1,40 @@
 inspired by: https://www.youtube.com/watch?v=vRTcE19M-KE
 
-It feels like most marketing coming out of "ai" research entities is heavily
+Most marketing coming out of "ai" research entities is heavily
 "model" focused [^1]. All of these posts seem to be touting "Our most capable model yet!",
-"Many parameters, wow! More numbers wow!", "Benchmarks that we probably included in the test set but didn't know it wow!".
+"Many parameters! More numbers wow!", "Benchmarks that we probably included in the test set but didn't know it wow!".
 
-Don't mistake me, Reader, I do not intend to undermine the effort and complexity involved in creating these models.
-I understand that "quantifiable" metrics can produce engaging headlines. And best to play it safe and just talk about
-the model. But model talk has quickly become... tired.
+Don't mistake me, Reader, I do not intend to undermine the effort and complexity involved in creating these models (the marketing already does that).
+Focusing on quantifiable metrics while simplifying achievements down to something the mainstream can still consume
+probably increases hit surface. But we must admit model talk is an oversimplification. Model talk is... tired.
 
-The model is but a single component users interact with. By itself, the llm really does one thing, generate.
-Which is not valuable alone. Consider practically any non-technical use case for a generative model. Only a software
-system can satisfy that use-case. What is the average person going to do with model weights?
+In an applied sense, the "model" is but a single component in a much larger software system
+users interact with. Perhaps at the core of it all is indeed a generative model -- which simply,
+just generates the next token. The system is what really brings value.
 
-Perhaps most people simply won't engage with other technical metrics regarding the system like:
+As these systems evolve in complexity and open-endedness, the discourse will transition away
+from model talk. At least, I hope it does. Whether or not this is realized through futility or is a
+side-effect of an overstimulated culture is another discussion.
 
-- "We have N designated Kubernetes clusters per region that have M instances of the model running"
-- "We have 3 smaller models acting as moderation nodes in the cluster"
-- "We're utilizing WebRTC to connect you directly to the model for low-latency audio/media streaming and here's a bunch of details about the setup"[^2]
+"We've implemented a new tunnelling relay method to help mitigate side-channel exploitation"
 
-But I'd be happy as peaches to read about that! Cool as heck!
+"We swapped our RAG controller with..."
 
-Admittedly though, this would be giving away quite a bit of information.
+"We noticed our retrieval agents communicate with out-of-cluster nodes under heavy load"
 
-Which brings me to the main point, the underlying model itself is not the company's moat,
-the arrangement, the deployment, the streaming -- the entire software system is.
+"We're utilizing WebRTC to establish realtime multi-agent collaborative assessment on media as it is ingested."[^2]
+
+I admit, such hypothetical headlines sound a bit too technical but I'd be happy as peaches if more
+marketing sounded like this. Anyway, out with model talk, in with systems talk.
+
+I am hopeful that we will start to see how these systems are communicating internally and how much freedom
+the components in the system have.
+
+Resources/Inspiration:
+
+- BAIR: [The Shift from Models to Compound AI Systems](https://bair.berkeley.edu/blog/2024/02/18/compound-ai-systems/)
+- This Stanford online [webinar](https://www.youtube.com/watch?v=vRTcE19M-KE)
 
 [^1]: [o1 preview](tab:https://openai.com/index/introducing-openai-o1-preview/), [llama 3](tab:https://ai.meta.com/blog/meta-llama-3/), [Amazon Nova](tab:https://aws.amazon.com/blogs/aws/introducing-amazon-nova-frontier-intelligence-and-industry-leading-price-performance/), and countless others.
 
-[^2]: LiveKit basically did this on [Hacker News](https://news.ycombinator.com/item?id=41743327) which was pretty cool. It would also be cool if openai discussed this in more detail in the context of their systems.
+[^2]: Inspired by LiveKit's post on [Hacker News](https://news.ycombinator.com/item?id=41743327) which was pretty cool. It would also be cool if openai discussed this in more detail in the context of their systems.
