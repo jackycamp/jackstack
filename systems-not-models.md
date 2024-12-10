@@ -14,19 +14,18 @@ As these systems evolve in complexity and open-endedness, the discourse will tra
 from model talk. At least, I hope it does. Whether or not this is realized through futility or is a
 side-effect of an overstimulated culture is another discussion.
 
-"We've implemented a new tunnelling relay method to help mitigate side-channel exploitation"
+"We've implemented a new tunnelling relay method to help mitigate side-channel exploitation."
 
 "We swapped our RAG controller with..."
 
-"We noticed our retrieval agents communicate with out-of-cluster nodes under heavy load"
+"We noticed our retrieval agents communicate with out-of-cluster nodes under heavy load."
 
 "We're utilizing WebRTC to establish realtime multi-agent collaborative assessment on media as it is ingested."[^2]
 
 I admit, such hypothetical headlines sound a bit too technical but I'd be happy as peaches if more
 marketing sounded like this. Anyway, out with model talk, in with systems talk.
 
-I am hopeful that we will start to see how these systems are communicating internally and how much freedom
-the components in the system have.
+I am hopeful we'll start to see, in detail, how these systems communicate internally and how much freedom the components in the system have.
 
 _resources in footnotes_ [^3]
 
