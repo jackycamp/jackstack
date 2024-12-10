@@ -28,11 +28,10 @@ marketing sounded like this. Anyway, out with model talk, in with systems talk.
 I am hopeful that we will start to see how these systems are communicating internally and how much freedom
 the components in the system have.
 
-Resources/Inspiration:
-
-- BAIR: [The Shift from Models to Compound AI Systems](https://bair.berkeley.edu/blog/2024/02/18/compound-ai-systems/)
-- This Stanford online [webinar](https://www.youtube.com/watch?v=vRTcE19M-KE)
+_resources in footnotes_ [^3]
 
 [^1]: [o1 preview](tab:https://openai.com/index/introducing-openai-o1-preview/), [llama 3](tab:https://ai.meta.com/blog/meta-llama-3/), [Amazon Nova](tab:https://aws.amazon.com/blogs/aws/introducing-amazon-nova-frontier-intelligence-and-industry-leading-price-performance/), and countless others.
 
 [^2]: Inspired by LiveKit's post on [Hacker News](https://news.ycombinator.com/item?id=41743327) which was pretty cool. It would also be cool if openai discussed this in more detail in the context of their systems.
+
+[^3]: Resources and inspiration material: BAIR [The Shift from Models to Compound AI Systems](https://bair.berkeley.edu/blog/2024/02/18/compound-ai-systems/). This Stanford online [webinar](https://www.youtube.com/watch?v=vRTcE19M-KE).
